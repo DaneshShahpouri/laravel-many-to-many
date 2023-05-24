@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="container">
-    <h1 class="my-4 text-center">Aggiungi un nuovo Tipo</h1>
-   <form action="{{route('admin.types.store')}}" method="POST">
+    <h1 class="my-4 text-center">Aggiungi una nuova Tecnologia</h1>
+   <form action="{{route('admin.technologies.store')}}" method="POST">
     @csrf
         <div class="mb-3">
             <label for="name">Nome</label>
