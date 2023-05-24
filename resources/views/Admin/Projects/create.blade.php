@@ -48,6 +48,13 @@
             </select>
         </div>
 
+        <div class="mb-3 form-group">
+            @foreach ($technologies as $tecnology)
+            <input type="checkbox" name="technoly[]" id="technology{{$technology->id}}" value="{{$technology->id}}">
+            <label for=""></label>
+            @endforeach
+        </div>
+
         <input type="submit" class="btn btn-primary" value="Crea">
     </form>
 </div>
