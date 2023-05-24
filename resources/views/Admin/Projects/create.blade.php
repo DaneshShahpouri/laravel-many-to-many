@@ -49,9 +49,11 @@
         </div>
 
         <div class="mb-3 form-group">
-            @foreach ($technologies as $tecnology)
-            <input type="checkbox" name="technoly[]" id="technology{{$technology->id}}" value="{{$technology->id}}">
-            <label for=""></label>
+            @foreach ($technologies as $technology)
+            <div class="form-check">
+                <input type="checkbox" name="technology[]" id="technology{{$technology->id}}" value="{{$technology->id}}">
+                <label for="{{$technology->id}}">{{$technology->name}}</label>
+            </div>
             @endforeach
         </div>
 

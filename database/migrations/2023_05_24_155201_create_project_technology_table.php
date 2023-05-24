@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('project_tecnology', function (Blueprint $table) {
-            $table->engine = 'InnoDB';
+        Schema::create('project_technology', function (Blueprint $table) {
+            //$table->engine = 'InnoDB';
             $table->unsignedBigInteger('project_id');
-            $table->unsignedBigInteger('tecnology_id');
+            $table->unsignedBigInteger('technology_id');
 
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
-            $table->foreign('tecnology_id')->references('id')->on('tecnologies')->onDelete('cascade');
+            $table->foreign('technology_id')->references('id')->on('technologies')->onDelete('cascade');
         });
     }
 
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('project_tecnology');
+        Schema::dropIfExists('project_technology');
     }
 };

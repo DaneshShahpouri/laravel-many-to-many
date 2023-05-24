@@ -21,7 +21,7 @@ class ProjectController extends Controller
     {
         $projects = Project::all();
 
-        return view('Admin/Projects/index', compact('projects'));
+        return view('admin.projects.index', compact('projects'));
     }
 
     /**
@@ -32,8 +32,8 @@ class ProjectController extends Controller
     public function create()
     {
         $types = Type::all();
-        $tecnologies = Technology::all();
-        return view('Admin/Projects/create', compact('types', 'technologies'));
+        $technologies = Technology::all();
+        return view('admin.projects.create', compact('types', 'technologies'));
     }
 
     /**
@@ -45,13 +45,18 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         $this->validation($request);
-        $formProject = $request->all();
-        $newProject = new Project();
-        $newProject->fill($formProject);
-        $newProject->slug = Str::slug($newProject->title, '-');
-        $newProject->save();
+        $formData = $request->all();
+        $project = new Project();
+        $project->fill($formData);
+        $project->slug = Str::slug($project->title, '-');
+        $project->save();
 
-        return redirect()->route('admin.projects.show', $newProject);
+        // dd($formData);
+        if (array_key_exists('technology', $formData)) {
+            $project->technologies()->attach($formData['technology']);
+        }
+
+        return redirect()->route('admin.projects.show', $project);
     }
 
     /**
@@ -64,7 +69,7 @@ class ProjectController extends Controller
     {
         // $project = Project::findOrFail($project);
 
-        return view('Admin/Projects/show', compact('project'));
+        return view('admin.projects.show', compact('project'));
     }
 
     /**
@@ -76,7 +81,8 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $types = Type::all();
-        return view('admin.projects.edit', compact('project', 'types'));
+        $technologies = Technology::all();
+        return view('admin.projects.edit', compact('project', 'types', 'technologies'));
     }
 
     /**
@@ -90,13 +96,19 @@ class ProjectController extends Controller
     {
         $this->validation($request);
 
-        $form_data = $request->all();
+        $formData = $request->all();
 
-        $project->update($form_data);
+        $project->update($formData);
         $project->slug = Str::slug($project->title, '-');
 
 
         $project->save();
+
+        if (array_key_exists('technology', $formData)) {
+            $project->technologies()->sync($formData['technology']);
+        } else {
+            $project->technologies->detach();
+        }
 
         return redirect()->route('admin.projects.show', $project->slug);
     }

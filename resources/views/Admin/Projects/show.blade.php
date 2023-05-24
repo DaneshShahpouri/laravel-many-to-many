@@ -29,6 +29,16 @@
             <p class="py-2 w-75">{{$project->slug}}</p>
         </div>
 
+        {{-- @dd($project->technologies[0]->name) --}}
+        <div class="description w-100 d-flex">
+            <h5 class="py-2 w-25">Tecnologie</h5>
+            @foreach($project->technologies as $technology)
+            <div class="d-flex justify-content-center align-items-center" style="">
+                <span class=" mx-1 py-1 px-3 rounded" style="color: {{$technology->color}}; border: 1px solid {{$technology->color}}">{{$technology->name ?? 'Nessuna'}}</span>
+            </div>
+            @endforeach
+        </div>
+
     </div>
 
     <div class="btn-wrapper col-12 m-4 d-flex flex-column justify-content-center align-items-center">

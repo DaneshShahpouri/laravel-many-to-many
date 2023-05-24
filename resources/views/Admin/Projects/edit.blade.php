@@ -49,8 +49,17 @@
             </select>
         </div>
 
-        <div class="d-flex justify-content-center">
+        
+        <div class="mb-3 form-group">
+            @foreach ($technologies as $technology)
+            <div class="form-check">
+                <input type="checkbox" name="technology[]" id="technology{{$technology->id}}" value="{{$technology->id}}" @checked($project->technologies->contains($technology))>
+                <label for="{{$technology->id}}">{{$technology->name}}</label>
+            </div>
+            @endforeach
+        </div>
 
+        <div class="d-flex justify-content-center">
             <a href="{{route('admin.projects.show', $project)}}" class="btn btn-secondary border m-3">Annulla</a>
             <input type="submit" class="btn btn-success m-3" value="Modifica">
         </div>
