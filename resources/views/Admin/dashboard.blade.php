@@ -7,5 +7,6 @@
     <p class="col-md-8 fs-4 w-75 py-4">Questa è la tua Area Privata, qui potrai Creare, Modificare o semplicemente riguardare i tuoi progetti.</p>
     <a href="{{route('admin.projects.index')}}" class="btn btn-primary btn-lg text-center px-5 mb-2" type="button">Vai Subito ai tuoi progetti.</a>
     <a href="{{route('admin.types.index')}}" class="btn btn-primary btn-lg text-center px-5 mb-2" type="button">Vai Subito ai Tipi.</a>
+    <a href="{{route('admin.technologies.index')}}" class="btn btn-primary btn-lg text-center px-5 mb-2" type="button">Vai Subito alle Tecnoloigie.</a>
 </div>
 @endsection

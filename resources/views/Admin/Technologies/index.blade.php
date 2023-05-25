@@ -11,6 +11,7 @@
                 <th>Name</th>
                 <th>Slug</th>
                 <th>Description</th>
+                <th>Color</th>
                 <th>Dettagli</th>
             </thead>
 
@@ -20,6 +21,7 @@
                     <td>{{$technology->name}}</td>
                     <td>{{$technology->slug}}</td>
                     <td>{{$technology->description}}</td>
+                    <td><span class="text-white rounded px-1" style="background:{{$technology->color}} ">{{$technology->color}}</span></td>
                     <td><a href="{{ route('admin.technologies.show', $technology->slug)}}" class=" px-1 text-decoration-none">Vedi</a></td>
 
                 </tr>

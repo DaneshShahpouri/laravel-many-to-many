@@ -19,6 +19,11 @@
             <p class="py-2 w-75">{{$technology->slug}}</p>
         </div>
 
+        <div class="description w-100 d-flex">
+            <h5 class="py-2 w-25">color</h5>
+            <p class="p-1 rounded text-white" style="background: {{$technology->color}}">{{$technology->color}}</p>
+        </div>
+
     </div>
 
     <div class="btn-wrapper col-12 m-4 d-flex flex-column justify-content-center align-items-center">
