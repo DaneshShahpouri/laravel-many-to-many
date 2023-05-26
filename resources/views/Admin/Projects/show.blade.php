@@ -2,9 +2,9 @@
 
 @section('content')
 
-<div class="show-container">
+<div class="show-container container">
     
-    <div id="img-container" style="background-image: url('{{$project->thumb}}')">
+    <div id="img-container" src="{{asset('storage/' . $project->cover_image)}}">
         <h1 class="text-white">{{$project->title}}</h1>
         <div id="layer"></div>
     </div>

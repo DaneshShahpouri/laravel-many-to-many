@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h1 class="my-4 text-center">Aggiungi un nuovo Progetto</h1>
-   <form action="{{route('admin.projects.store')}}" method="POST">
+   <form action="{{route('admin.projects.store')}}" method="POST" enctype="multipart/form-data">
     @csrf
         <div class="mb-3">
             <label for="title">Titolo</label>
@@ -29,14 +29,16 @@
             @enderror
         </div>
 
+        {{-- Immagine --}}
         <div class="mb-3">
-            <label for="thumb">Immagine</label>
-            <input class="form-control @error('thumb') is-invalid @enderror" type="text" name="thumb" id="thumb" class="form-control" value="{{old('thumb')}}">
-            @error('thumb')
+            <label for="cover_image">Immagine</label>
+            <input class="form-control @error('cover_image') is-invalid @enderror" type="file" name="cover_image" id="cover_image" class="form-control" value="{{old('cover_image')}}">
+            @error('cover_image')
             <div class="invalid-feedback">{{$message}}</div>
             @enderror
         </div>
 
+        {{-- Tipologia --}}
         <div class="mb-3">
             <label for="type_id">Tipologia</label>
             <select name="type_id" id="type_id" class="w-100">
@@ -48,6 +50,7 @@
             </select>
         </div>
 
+        {{-- Tecnologia --}}
         <div class="mb-3 form-group">
             @foreach ($technologies as $technology)
             <div class="form-check">

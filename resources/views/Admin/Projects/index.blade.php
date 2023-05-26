@@ -2,6 +2,8 @@
 
 @section('content')
 <div class="container">
+    {{-- Le main section dividono lo spazio in grandi screen che dovrebbero essere poi scrollabli --}}
+    {{-- Section 1 --}}
     <section class="_main-section">
         <div class="main-title border-bottom  border-success mb-5 w-25 d-flex flex-column">
             <h1 class="title p-2">Progetti</h1>
@@ -31,12 +33,12 @@
 
     </section>
 
-
+{{-- Section 2 --}}
     <section class="_main-section">
         <div class="contaniner row" id="__my-container">
             @foreach ($projects as $project)
-                <a href="{{ route('admin.projects.show', $project->slug)}}" class="__my-card card p-1 col-md-6 col-12 border-0 decoration-none text-white">
-                    <img class="card-img-top" src="{{$project->thumb}}" alt="Card image cap">
+                <a href="{{ route('admin.projects.show', $project->slug)}}" class="__my-card border-0 decoration-none text-white">
+                    <img class="card-img-top" src="{{asset('storage/' . $project->cover_image)}}" alt="Card image cap">
                     <div class="__my-card-body">
                         <h5 class="p-1">{{$project->type->name ?? 'Nessuna'}}</h5>
                         <h5 class="card-title py-2 text-center">{{$project->title}}</h5>
@@ -45,7 +47,7 @@
                             <h5 class="p-1">Tecnologie</h5>
                             @foreach($project->technologies as $technology)
                             <div class="d-flex justify-content-center align-items-center" style="">
-                                <span class=" mx-1 py-1 px-3 rounded" style="color: {{$technology->color}}; border: 1px solid {{$technology->color}}">{{$technology->name ?? 'Nessuna'}}</span>
+                                <span class=" mx-1 px-2 rounded" style=" background-color:  {{$technology->color}}">{{$technology->name ?? 'Nessuna'}}</span>
                             </div>
                             @endforeach
                         </div>

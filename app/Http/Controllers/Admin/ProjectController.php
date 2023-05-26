@@ -7,6 +7,7 @@ use App\Models\Project;
 use App\Models\Technology;
 use App\Models\Type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -47,6 +48,12 @@ class ProjectController extends Controller
         $this->validation($request);
         $formData = $request->all();
         $project = new Project();
+
+        if ($request->hasFile('cover_image')) {
+            $path = Storage::put('projects_images', $request->cover_image);
+            $formData['cover_image'] = $path;
+        }
+
         $project->fill($formData);
         $project->slug = Str::slug($project->title, '-');
         $project->save();
@@ -98,6 +105,14 @@ class ProjectController extends Controller
 
         $formData = $request->all();
 
+        if ($request->hasFile('cover_image')) {
+            if ($project->cover_image) {
+                Storage::delete($project->cover_image);
+            }
+            $path = Storage::put('projects_image', $request->covert_image);
+            $formData['cover_image'] = $path;
+        }
+
         $project->update($formData);
         $project->slug = Str::slug($project->title, '-');
 
@@ -135,13 +150,16 @@ class ProjectController extends Controller
             'title' => 'required|unique:projects,id|max:150',
             'description' => 'required',
             'year' => 'nullable|max:4',
-            'type_id' => 'nullable|exists:projects,id'
+            'type_id' => 'nullable|exists:projects,id',
+            'cover_image' => 'nullable|image|max:2096'
         ], [
             'title.required' => "Titolo necessario per continuare",
             'title.max' => "Titolo troppo lungo, non deve superare i :max caratteri",
             'title.unique' => "Titolo già presente nel database",
             'description.required' => "Descrizione necessaria per continuare",
-            'type_id.exists' => 'Tipo già presente.'
+            'type_id.exists' => 'Tipo già presente.',
+            'cover_image.image' => 'Devi necessariamente importare una immagine.',
+            'cover_image.max' => 'Immagine troppo grande'
         ])->validate();
         return $validator;
     }

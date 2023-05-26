@@ -31,10 +31,11 @@
             @enderror
         </div>
 
+       {{-- Immagine --}}
         <div class="mb-3">
-            <label for="thumb">Immagine</label>
-            <input class="form-control @error('thumb') is-invalid @enderror" type="text" name="thumb" id="thumb" class="form-control" value="{{old('thumb') ?? $project->thumb}}">
-            @error('thumb')
+            <label for="cover_image">Immagine</label>
+            <input class="form-control @error('cover_image') is-invalid @enderror" type="file" name="cover_image" id="cover_image" class="form-control" value="{{old('cover_image')}}">
+            @error('cover_image')
             <div class="invalid-feedback">{{$message}}</div>
             @enderror
         </div>
