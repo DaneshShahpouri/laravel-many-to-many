@@ -3,13 +3,13 @@
 @section('content')
 <div class="container">
     <h1 class="my-4 text-center">Modifica Progetto</h1>
-   <form action="{{route('admin.projects.update', $project->slug)}}" method="POST">
+   <form action="{{route('admin.projects.update', $project->slug)}}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PUT')
 
         <div class="mb-3">
             <label for="title">Titolo</label>
-            <input class="form-control @error('title') is-invalid @enderror" type="text" name="title" id="title" class="form-control" value="{{old('title') ?? $project->title}}">
+            <input class="form-control @error('title') is-invalid @enderror" type="text" name="title" id="title" value="{{old('title') ?? $project->title}}">
             @error('title')
             <div class="invalid-feedback">{{$message}}</div>
             @enderror
@@ -17,7 +17,7 @@
 
         <div class="mb-3">
             <label for="description">Descrizione</label>
-            <input class="form-control @error('description') is-invalid @enderror" type="text" name="description" id="description" class="form-control" value="{{old('description') ?? $project->description}}">
+            <input class="form-control @error('description') is-invalid @enderror" type="text" name="description" id="description" value="{{old('description') ?? $project->description}}">
             @error('description')
             <div class="invalid-feedback">{{$message}}</div>
             @enderror
@@ -25,7 +25,7 @@
 
         <div class="mb-3">
             <label for="year">Anno</label>
-            <input class="form-control @error('year') is-invalid @enderror" type="number" name="year" id="year" class="form-control" value="{{old('year') ?? $project->year}}">
+            <input class="form-control @error('year') is-invalid @enderror" type="number" name="year" id="year" value="{{old('year') ?? $project->year}}">
             @error('year')
             <div class="invalid-feedback">{{$message}}</div>
             @enderror
@@ -34,7 +34,7 @@
        {{-- Immagine --}}
         <div class="mb-3">
             <label for="cover_image">Immagine</label>
-            <input class="form-control @error('cover_image') is-invalid @enderror" type="file" name="cover_image" id="cover_image" class="form-control" value="{{old('cover_image')}}">
+            <input class="form-control @error('cover_image') is-invalid @enderror" type="file" name="cover_image" id="cover_image" >
             @error('cover_image')
             <div class="invalid-feedback">{{$message}}</div>
             @enderror

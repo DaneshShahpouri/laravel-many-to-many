@@ -7,7 +7,7 @@
     @csrf
         <div class="mb-3">
             <label for="title">Titolo</label>
-            <input class="form-control @error('title') is-invalid @enderror" type="text" name="title" id="title" class="form-control" value="{{old('title')}}">
+            <input class="form-control @error('title') is-invalid @enderror" type="text" name="title" id="title" value="{{old('title')}}">
             @error('title')
             <div class="invalid-feedback">{{$message}}</div>
             @enderror
@@ -15,7 +15,7 @@
 
         <div class="mb-3">
             <label for="description">Descrizione</label>
-            <input class="form-control @error('description') is-invalid @enderror" type="text" name="description" id="description" class="form-control" value="{{old('description')}}">
+            <input class="form-control @error('description') is-invalid @enderror" type="text" name="description" id="description" value="{{old('description')}}">
             @error('description')
             <div class="invalid-feedback">{{$message}}</div>
             @enderror
@@ -23,7 +23,7 @@
 
         <div class="mb-3">
             <label for="year">Anno</label>
-            <input class="form-control @error('year') is-invalid @enderror" type="number" name="year" id="year" class="form-control" value="{{old('year')}}">
+            <input class="form-control @error('year') is-invalid @enderror" type="number" name="year" id="year" value="{{old('year')}}">
             @error('year')
             <div class="invalid-feedback">{{$message}}</div>
             @enderror
@@ -32,7 +32,7 @@
         {{-- Immagine --}}
         <div class="mb-3">
             <label for="cover_image">Immagine</label>
-            <input class="form-control @error('cover_image') is-invalid @enderror" type="file" name="cover_image" id="cover_image" class="form-control" value="{{old('cover_image')}}">
+            <input class="form-control @error('cover_image') is-invalid @enderror" type="file" name="cover_image" id="cover_image" value="{{old('cover_image')}}">
             @error('cover_image')
             <div class="invalid-feedback">{{$message}}</div>
             @enderror
