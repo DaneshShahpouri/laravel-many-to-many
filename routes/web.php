@@ -3,10 +3,15 @@
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\TechnologyController;
 use App\Http\Controllers\Admin\TypeController;
+use App\Http\Controllers\Guest\PageController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Project;
 use GuzzleHttp\Middleware;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Guest\GuestProjectController;
+use App\Http\Controllers\Guest\GuestTechnologyController;
+use App\Http\Controllers\Guest\GuestTypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,9 +24,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 
 
@@ -39,10 +42,25 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
         Route::resource('types', TypeController::class)->parameters(['types' => 'type:slug']);
         Route::resource('technologies', TechnologyController::class)->parameters(['technologies' => 'technology:slug']);
 
-        Route::get('/', function () {
+        Route::get('dashboard', function () {
             return view('admin.dashboard');
-        });
+        })->name('dashboard');
+
+        Route::get('/search/', [ProjectController::class, 'search'])->name('search');
     }
 );
+
+
+
+
+// GUEST-index
+//-------------------------------
+Route::get('/', [PageController::class, 'index'])->name('home');
+Route::get('admin/home', [PageController::class, 'adminindex'])->name('admin.home');
+Route::resource('projects', GuestProjectController::class)->parameters(['projects' => 'project:slug']);
+Route::resource('types', GuestTypeController::class)->parameters(['types' => 'type:slug']);
+Route::resource('technologies', GuestTechnologyController::class)->parameters(['technologies' => 'technology:slug']);
+//-------------------------------
+
 
 require __DIR__ . '/auth.php';

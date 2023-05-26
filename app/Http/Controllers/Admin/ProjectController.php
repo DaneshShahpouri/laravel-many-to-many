@@ -17,7 +17,7 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $projects = Project::all();
 
@@ -126,6 +126,8 @@ class ProjectController extends Controller
         return redirect()->route('admin.projects.index');
     }
 
+
+
     private function validation(Request $request)
     {
         $formData = $request->all();
@@ -142,5 +144,21 @@ class ProjectController extends Controller
             'type_id.exists' => 'Tipo già presente.'
         ])->validate();
         return $validator;
+    }
+
+    public function search(Request $request)
+    {
+        // Get the search value from the request
+        $search = $request->input('search');
+
+        // Search in the title and body columns from the projects table
+        $projects = Project::query()
+            ->where('title', 'LIKE', "%{$search}%")->get();
+        // ->orWhere('body', 'LIKE', "%{$search}%")
+
+
+
+        // Return the search view with the resluts compacted
+        return view('admin.projects.index', compact('projects'));
     }
 }
