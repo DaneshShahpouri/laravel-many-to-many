@@ -4,6 +4,7 @@
 //-------------------
 .__my-card {
     position: relative;
+    margin: 1em 0;
     top: 0;
     color: white;
     text-shadow: 1px 1px 2px black;
@@ -12,10 +13,12 @@
     transition: all .4s;
 
     width: 700px;
-    height: 200px;
+    height: 500px;
     display: inline-block;
 
     img {
+        display: block;
+        background-color: rgb(34, 34, 35);
         width: 100%;
         height: 100%;
         object-fit: cover;
@@ -23,8 +26,8 @@
 
     .__my-card-body {
         position: absolute;
-        bottom: 0%;
-        left: 0%;
+        top: 0%;
+        right: -80%;
         transform: translateY(0%) translateX(-0%);
         width: 80%;
         padding: 1em;
@@ -123,4 +126,159 @@
     width: 100%;
     height: 100vh;
     padding: 4em;
+    position: relative;
+}
+
+//Showroom
+#showroom {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+
+    .navbar {
+        position: absolute;
+        z-index: 3;
+        top: 0;
+        width: 100%;
+
+        #navbarSupportedContent {
+            ul {
+                li {
+                    a {
+                        &:hover {
+                            color: rgb(1, 146, 1)
+                        }
+
+                        ;
+                    }
+                }
+            }
+        }
+    }
+
+    .__container {
+        position: relative;
+        z-index: 1;
+
+        padding: 3em;
+
+        width: 100vw;
+        height: 100vh;
+        border-radius: 10px;
+
+        // debug
+        // border: 2px solid orange;
+        // background: #00000029;
+    }
+}
+
+._container-wrapper {
+    height: 100vh;
+    overflow-y: hidden;
+}
+
+// Posizioni
+.p-pre {
+    bottom: 170%;
+
+}
+
+.p-center {
+    bottom: 100%
+}
+
+.p-post {
+    bottom: -70%;
+
+}
+
+// Classi animazioni
+.move-center-top {
+    animation: 1s moveCenterTop;
+}
+
+.move-center-bottom {
+    animation: 1s moveCenterBottom;
+}
+
+.move-bottom-center {
+    animation: 1.1s moveBottomCenter;
+}
+
+.move-top-center {
+    animation: 1.1s moveTopCenter;
+}
+
+
+//------------------------------------------------
+// Animation
+//-------------------------------------------------
+
+//classi
+//.......................................
+@keyframes moveCenterTop {
+    0% {
+        bottom: 100%;
+        opacity: 1
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    90% {
+        bottom: 300%;
+
+    }
+
+    100% {
+        bottom: 300%
+    }
+}
+
+@keyframes moveCenterBottom {
+    0% {
+        bottom: 100%;
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    90% {
+        bottom: -100%
+    }
+
+    100% {
+        bottom: -100%
+    }
+}
+
+@keyframes moveBottomCenter {
+    0% {
+        bottom: 0%
+    }
+
+    90% {
+        bottom: 200%
+    }
+
+    100% {
+        bottom: 200%
+    }
+}
+
+@keyframes moveTopCenter {
+    0% {
+        bottom: 200%
+    }
+
+    90% {
+        bottom: 0%
+    }
+
+    100% {
+        bottom: 0%
+    }
 }

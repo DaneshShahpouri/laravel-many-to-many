@@ -7,7 +7,7 @@
 
          @foreach ($projects as $project)
         <a href="{{ route('projects.show', $project->slug)}}" class="__my-card card p-1 col-md-6 col-12 border-0 decoration-none text-white">
-            <img class="card-img-top" src="{{$project->thumb}}" alt="Card image cap">
+            <img class="card-img-top" src="{{asset('storage/' . $project->cover_image)}}" alt="Card image cap">
             <div class="__my-card-body">
                 <h5 class="p-1">{{$project->type->name ?? 'Nessuna'}}</h5>
                 <h5 class="card-title py-2 text-center">{{$project->title}}</h5>

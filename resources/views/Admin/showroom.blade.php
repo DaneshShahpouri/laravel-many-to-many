@@ -23,10 +23,9 @@
 </head>
 
 <body>
-    <div id="app" class="bg-ligth" style="min-height: 100vh">
-
-
-        <nav class="navbar navbar-expand-md navbar-ligth  shadow-sm" style="border-bottom:4px solid rgba(193, 245, 180, 0.747)">
+    <div id="showroom">
+        {{-- Navbar --}}
+        <nav class="navbar navbar-expand-md">
             <div class="container">
                 <a class="navbar-brand d-flex align-items-center" href="{{ route('admin.home') }}">
                     <div class="logo_laravel">
@@ -50,14 +49,13 @@
                         <li class="nav-item">
                             <a href="{{route('admin.projects.index')}}" class="nav-link" type="button">Progetti</a>
                         </li>
+                        
                         <li class="nav-item">
                             <a href="{{route('admin.types.index')}}" class="nav-link" type="button">Tipologie</a>
                         </li>
+
                         <li class="nav-item">
                             <a href="{{route('admin.technologies.index')}}" class="nav-link" type="button">Tecnoloigie</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{route('admin.showroom')}}" class="nav-link" type="button">Show</a>
                         </li>
                     </ul>
 
@@ -68,9 +66,9 @@
                         <input name="search" class="form-control mx-2 mr-sm-2 bg-ligth" type="search" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fa-solid fa-magnifying-glass"></i> </button>
                     </form>
+                    
 
-
-
+                    
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
@@ -96,7 +94,7 @@
                                                      document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
-
+                                
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf
                                 </form>
@@ -106,16 +104,225 @@
                     </ul>
                     
                 </div>
+
             </div>
         </nav>
+        
+        {{-- main --}}
+        <div class="_container-wrapper" >
+            <div class="__container p-pre" id="container-pre">
+              
+            </div>
 
-        <main >
-            @yield('content')
-        </main>
+            <div class="__container p-center" id="container-1">
+                
+            </div>
+
+            <div class="__container p-post" id="container-post">
+            
+            </div>
+        </div>
     </div>
 
 
     
+    <script>
+        let MainScrollableEl = document.getElementById('container-1')
+        let TopScrollableEl = document.getElementById('container-pre')
+        let BottomScrollableEl = document.getElementById('container-post')
+        let isAnimated = false;
+
+        // Dati di configurazione
+        //Titolo della pagina | Descrizione | isSlideble | se si: array di pagine del progetto scrollorizzontale 
+        let confArray=[
+            ['Showroom', 'Sezione della pagina dedicata alla presentazione', false],
+            ['projects', 'Sezione della pagina dedicata ai progetti', true,['pag1, pag2, pag3']],
+            ['contact', 'sezione dedicata ai contatti', false],
+            ['extra', 'qui puoi vedere progetti extra', true,['pag1', 'pag2']]
+        ]
+
+        let contatore=0;
+        let precontatore=confArray.length-1;
+        let postcontatore=1;
+        
+        // Dal centro al basso
+        function scrollElCenterDown(elemento){
+           
+                elemento.classList.add('move-center-top');
+                let disbandClass= setTimeout(() => {
+                    elemento.classList.remove('move-center-top');
+                    
+                }, 2200);
+            
+        }
+        // Dal centro al alto
+        function scrollElCenterUp(elemento){
+          
+                elemento.classList.add('move-center-bottom');
+                let disbandClass= setTimeout(() => {
+                    elemento.classList.remove('move-center-bottom');
+                    
+            }, 2200);
+        }
+        //Dall alto al centro
+        function scrollElTopCenter(elemento){
+            elemento.style='display:block';
+            elemento.classList.add('move-top-center');
+            let disbandClass= setTimeout(() => {
+                elemento.classList.remove('move-top-center');   
+            }, 2200);    
+        } 
+        //Dall basso al centro
+        function scrollElBottomCenter(elemento){
+           elemento.classList.add('move-bottom-center');
+           let disbandClass= setTimeout(() => {
+               elemento.classList.remove('move-bottom-center');
+           }, 2200);
+       
+        }
+
+        /** Crea degli elementi con classe e li aggiunge all'elemento padre, il numero è specificabile */
+        function createElementAppend (elementoDaCreare, classe, contenuto, elementoGenitore, numeroElementi){
+            
+            for(let i= 0; i<numeroElementi; i++){
+
+                let newEl = document.createElement(elementoDaCreare);
+                newEl.classList.add(classe);
+                newEl.innerHTML = contenuto;
+            
+                elementoGenitore.append(newEl);
+
+            }
+        }
+
+        //creazione Layout
+        function creaContenutoMain(contatore){
+            createElementAppend('div', '_my_container', '', MainScrollableEl, 1);
+            let containersMain =  document.querySelector('._my_container');
+            
+            createElementAppend('h1', 'title', confArray[contatore][0], containersMain, 1);
+            createElementAppend('div', '_my_container-main', confArray[contatore][1], containersMain, 1);
+
+        }
+
+        function creaContenutoTop(contatore){
+            createElementAppend('div', '_my_container_pre', '', TopScrollableEl, 1);
+            let containersTop =  document.querySelector('._my_container_pre');
+            
+            createElementAppend('h1', 'title', confArray[contatore][0], containersTop, 1);
+            createElementAppend('div', '_my_container_pre-main', confArray[contatore][1], containersTop, 1);
+        }
+
+        function creaContenutoBottom(contatore){
+            createElementAppend('div', '_my_container_post', '', BottomScrollableEl, 1);
+            let containersBottom =  document.querySelector('._my_container_post');
+            
+            createElementAppend('h1', 'title', confArray[contatore][0], containersBottom, 1);
+            createElementAppend('div', '_my_container-main', confArray[contatore][1], containersBottom, 1);
+        }
+        //Fine Funzioni
+        //------------------------------------------------------
+
+
+        
+        //scaffolding
+        creaContenutoMain(contatore);
+        creaContenutoTop(precontatore);
+        creaContenutoBottom(precontatore);
+        //------------------------------------------------------
+
+        
+        window.onwheel = event => {
+            if(event.deltaY >= 0){
+                // Scrolling Down with mouse
+                // console.log('Scroll Down', isAnimated);
+
+                if(isAnimated==false){
+                    isAnimated=true;
+                    scrollElCenterDown(MainScrollableEl);
+                    scrollElBottomCenter(BottomScrollableEl); 
+                    let timer= setTimeout(()=> {
+                        isAnimated=false
+                    }, 2200)  
+                    
+                    contatore++;
+                    if(contatore==confArray.length){contatore=0} 
+                    if(contatore==0){precontatore=confArray.length-1}else{precontatore= contatore - 1;}
+                    if(contatore==confArray.length-1){postcontatore = 0}else{postcontatore= contatore + 1;} 
+                    
+                    // Creazione pagina principale
+                    let creazioneContenutoMain=setTimeout(()=>{
+                        MainScrollableEl.innerHTML='';
+                        creaContenutoMain(contatore);
+
+                    },750)
+
+                    let creazioneContenutoSecond=setTimeout(()=>{
+
+                        TopScrollableEl.innerHTML='';
+                        creaContenutoTop(precontatore);
+
+                        BottomScrollableEl.innerHTML='';
+                        creaContenutoBottom(postcontatore);
+                    },1200)
+                    //----------------------------
+
+
+                    console.log('contatore: ' + contatore)
+                    console.log('precontatore: ' + precontatore)
+                    console.log('postcontatore: ' + postcontatore)
+                }
+
+            } else {
+                // Scrolling Up with mouse
+                //console.log('Scroll Up');
+                if(isAnimated==false){
+                    isAnimated=true;
+                    scrollElCenterUp(MainScrollableEl)
+                    scrollElTopCenter(TopScrollableEl);
+                    let timer= setTimeout(()=> {
+                        isAnimated=false
+                    }, 2200)
+                    
+                    contatore--;
+                    if(contatore==-1){contatore=confArray.length-1}
+                    if(contatore==0){precontatore=confArray.length-1}else{precontatore= contatore - 1;}
+                    if(contatore==confArray.length-1){postcontatore = 0}else{postcontatore= contatore + 1;}
+
+                     // Creazione pagina principale
+                     let creazioneContenutoMain=setTimeout(()=>{
+                        MainScrollableEl.innerHTML='';
+                        creaContenutoMain(contatore);
+                    },980);
+                    let creazioneContenutoSecond=setTimeout(()=>{
+
+                    TopScrollableEl.innerHTML='';
+                    creaContenutoTop(precontatore);
+
+                    BottomScrollableEl.innerHTML='';
+                    creaContenutoBottom(postcontatore);
+                    },1200)
+                    //----------------------------
+
+
+                    console.log('contatore: ' + contatore)
+                    console.log('precontatore: ' + precontatore)
+                    console.log('postcontatore: ' + postcontatore)
+                } 
+            }
+    
+            if(event.deltaX >= 0){
+                // Scrolling Down with mouse
+                //console.log('Scroll Left');
+            } else {
+                // Scrolling Up with mouse
+                //console.log('Scroll Right');
+            }
+        }
+        
+    
+    
+        </script>
 </body>
 
 </html>

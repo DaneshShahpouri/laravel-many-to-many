@@ -46,7 +46,10 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
             return view('admin.dashboard');
         })->name('dashboard');
 
-        Route::get('/search/', [ProjectController::class, 'search'])->name('search');
+        Route::get('search', [ProjectController::class, 'search'])->name('search');
+        Route::get('showroom', function () {
+            return view('admin.showroom');
+        })->name('showroom');
     }
 );
 
