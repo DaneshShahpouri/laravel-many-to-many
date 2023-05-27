@@ -34,6 +34,7 @@
         opacity: 0;
         transition: all .4s;
 
+
         h5 {
             background-color: rgba(33, 37, 41, 0);
             border-radius: 10px;
@@ -140,6 +141,8 @@
         z-index: 3;
         top: 0;
         width: 100%;
+        color: white;
+        text-shadow: 1px 1px rgb(255, 255, 255);
 
         #navbarSupportedContent {
             ul {
@@ -160,16 +163,32 @@
         position: relative;
         z-index: 1;
 
-        padding: 3em;
-
         width: 100vw;
         height: 100vh;
         border-radius: 10px;
+
+        div {
+            padding: 4em;
+        }
 
         // debug
         // border: 2px solid orange;
         // background: #00000029;
     }
+}
+
+.title {
+    text-transform: uppercase;
+}
+
+.bordo-bianco {
+    text-shadow: 2px 0 #fff, -2px 0 #fff, 0 2px #fff, 0 -2px #fff,
+        1px 1px #fff, -1px -1px #fff, 1px -1px #fff, -1px 1px #fff;
+}
+
+.bordo-bianco-transparente {
+    text-shadow: 2px 0 #ffffff38, -2px 0 #ffffff38, 0 2px #ffffff38, 0 -2px #ffffff38,
+        1px 1px #ffffff38, -1px -1px #ffffff38, 1px -1px #ffffff38, -1px 1px #ffffff38;
 }
 
 ._container-wrapper {
@@ -218,6 +237,10 @@
     top: 50%;
     width: 40px;
     height: 40px;
+    margin-left: 1em;
+    border: none;
+    color: rgba(255, 255, 255, 0.269);
+    background-color: rgba(0, 0, 0, 0.135);
 }
 
 .btn-arrow-right-bottom,
@@ -228,8 +251,95 @@
     top: 50%;
     width: 40px;
     height: 40px;
+    margin-right: 1em;
+    border: none;
+    color: rgba(255, 255, 255, 0.269);
+    background-color: rgba(0, 0, 0, 0.135);
     // transform: translateX(-100%);
 }
+
+//-------------------------------------------------
+//Background
+
+.background {
+    position: absolute;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background: rgba(0, 9, 0, 0);
+
+    .cerchio {
+        position: absolute;
+        border: 1px solid black;
+        border-radius: 50%;
+        scale: 2;
+
+        width: 400px;
+        height: 400px;
+        transition: all .8s;
+    }
+
+    //Posizione del top cerchio
+    .top-showroom {
+        top: 0%;
+        left: 0%;
+        transition: all .8s
+    }
+
+    //primo step
+    .top-projects {
+        top: -10%;
+        left: 50%;
+        transition: all .8s
+    }
+
+    //secondo step - si ripete con colori diversi
+    .top-contacts {
+        top: 0%;
+        left: 100%;
+        transition: all .8s
+    }
+
+    //terzo step
+    .top-extra {
+        top: 30%;
+        left: 120%;
+        transition: all .8s
+    }
+
+    //Posizione del Bottom cerchio
+    .bottom-showroom {
+        bottom: 0%;
+        right: 0%;
+        transition: all .8s
+    }
+
+    //primo step
+    .bottom-projects {
+        bottom: 10%;
+        right: -50%;
+        transition: all .8s
+    }
+
+    //secondo step - si ripete con colori diversi
+    .bottom-contacts {
+        bottom: 0%;
+        right: 100%;
+        transition: all .8s
+    }
+
+    //terzo step
+    .bottom-extra {
+        bottom: 30%;
+        right: 120%;
+        transition: all .8s
+    }
+
+}
+
+//-------------------------------------------------
 
 // Classi animazioni
 .move-center-top {
