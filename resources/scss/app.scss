@@ -174,22 +174,61 @@
 
 ._container-wrapper {
     height: 100vh;
-    overflow-y: hidden;
+    overflow: hidden;
 }
 
 // Posizioni
 .p-pre {
     bottom: 170%;
-
 }
 
 .p-center {
-    bottom: 100%
+    bottom: 100%;
+    left: 0%;
 }
 
 .p-post {
     bottom: -70%;
+}
 
+.p-left {
+    left: 0%;
+    bottom: 100%;
+}
+
+.p-right {
+    left: 100%;
+    bottom: 100%;
+}
+
+//btn arrow
+._my_container_post,
+._my_container_pre,
+._my_container {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.btn-arrow-left-bottom,
+.btn-arrow-left-top,
+.btn-arrow-left {
+    position: absolute;
+    left: 0%;
+    top: 50%;
+    width: 40px;
+    height: 40px;
+}
+
+.btn-arrow-right-bottom,
+.btn-arrow-right-top,
+.btn-arrow-right {
+    position: absolute;
+    right: 0%;
+    top: 50%;
+    width: 40px;
+    height: 40px;
+    // transform: translateX(-100%);
 }
 
 // Classi animazioni
@@ -270,6 +309,20 @@
 }
 
 @keyframes moveTopCenter {
+    0% {
+        bottom: 200%
+    }
+
+    90% {
+        bottom: 0%
+    }
+
+    100% {
+        bottom: 0%
+    }
+}
+
+@keyframes moveCenterLeft {
     0% {
         bottom: 200%
     }

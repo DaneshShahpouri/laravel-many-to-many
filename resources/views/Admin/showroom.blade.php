@@ -49,7 +49,7 @@
                         <li class="nav-item">
                             <a href="{{route('admin.projects.index')}}" class="nav-link" type="button">Progetti</a>
                         </li>
-                        
+
                         <li class="nav-item">
                             <a href="{{route('admin.types.index')}}" class="nav-link" type="button">Tipologie</a>
                         </li>
@@ -66,9 +66,9 @@
                         <input name="search" class="form-control mx-2 mr-sm-2 bg-ligth" type="search" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fa-solid fa-magnifying-glass"></i> </button>
                     </form>
-                    
 
-                    
+
+
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
@@ -94,7 +94,7 @@
                                                      document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
-                                
+
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf
                                 </form>
@@ -102,216 +102,314 @@
                         </li>
                         @endguest
                     </ul>
-                    
+
                 </div>
 
             </div>
         </nav>
-        
+
         {{-- main --}}
-        <div class="_container-wrapper" >
-            <div class="__container p-pre" id="container-pre">
-              
-            </div>
+        <div class="_container-wrapper">
+            <div class="__container p-pre" id="container-pre"></div>
 
-            <div class="__container p-center" id="container-1">
-                
-            </div>
-
-            <div class="__container p-post" id="container-post">
+            <div class="__container p-center" id="container-1"></div>
             
+            <div class="__container p-post" id="container-post"></div>
+            
+            <div class="__container p-left" id="container-left">
+                <h1>contenuto sinistra</h1>
+            </div>
+
+            <div class="__container p-right" id="container-right">
+                contenuto destra
             </div>
         </div>
     </div>
 
 
-    
+
     <script>
         let MainScrollableEl = document.getElementById('container-1')
         let TopScrollableEl = document.getElementById('container-pre')
         let BottomScrollableEl = document.getElementById('container-post')
+        let LeftScrollableEl = document.getElementById('container-left')
+        let RightScrollableEl = document.getElementById('container-right')
         let isAnimated = false;
 
         // Dati di configurazione
         //Titolo della pagina | Descrizione | isSlideble | se si: array di pagine del progetto scrollorizzontale 
-        let confArray=[
+        let confArray = [
             ['Showroom', 'Sezione della pagina dedicata alla presentazione', false],
-            ['projects', 'Sezione della pagina dedicata ai progetti', true,['pag1, pag2, pag3']],
-            ['contact', 'sezione dedicata ai contatti', false],
-            ['extra', 'qui puoi vedere progetti extra', true,['pag1', 'pag2']]
+            ['projects', 'Sezione della pagina dedicata ai progetti', true, ['pag1', 'pag2', 'pag3']],
+            ['contacts', 'sezione dedicata ai contatti', false],
+            ['extra', 'qui puoi vedere progetti extra', true, ['pag1', 'pag2']]
         ]
 
-        let contatore=0;
-        let precontatore=confArray.length-1;
-        let postcontatore=1;
-        
+        let contatore = 0;
+        let precontatore = confArray.length - 1;
+        let postcontatore = 1;
+
+        //Scroll Verticale
         // Dal centro al basso
-        function scrollElCenterDown(elemento){
-           
-                elemento.classList.add('move-center-top');
-                let disbandClass= setTimeout(() => {
-                    elemento.classList.remove('move-center-top');
-                    
-                }, 2200);
-            
+        function scrollElCenterDown(elemento) {
+
+            elemento.classList.add('move-center-top');
+            let disbandClass = setTimeout(() => {
+                elemento.classList.remove('move-center-top');
+
+            }, 2200);
+
         }
         // Dal centro al alto
-        function scrollElCenterUp(elemento){
-          
-                elemento.classList.add('move-center-bottom');
-                let disbandClass= setTimeout(() => {
-                    elemento.classList.remove('move-center-bottom');
-                    
+        function scrollElCenterUp(elemento) {
+
+            elemento.classList.add('move-center-bottom');
+            let disbandClass = setTimeout(() => {
+                elemento.classList.remove('move-center-bottom');
+
             }, 2200);
         }
         //Dall alto al centro
-        function scrollElTopCenter(elemento){
-            elemento.style='display:block';
+        function scrollElTopCenter(elemento) {
+            elemento.style = 'display:block';
             elemento.classList.add('move-top-center');
-            let disbandClass= setTimeout(() => {
-                elemento.classList.remove('move-top-center');   
-            }, 2200);    
-        } 
+            let disbandClass = setTimeout(() => {
+                elemento.classList.remove('move-top-center');
+            }, 2200);
+        }
         //Dall basso al centro
-        function scrollElBottomCenter(elemento){
-           elemento.classList.add('move-bottom-center');
-           let disbandClass= setTimeout(() => {
-               elemento.classList.remove('move-bottom-center');
-           }, 2200);
-       
+        function scrollElBottomCenter(elemento) {
+            elemento.classList.add('move-bottom-center');
+            let disbandClass = setTimeout(() => {
+                elemento.classList.remove('move-bottom-center');
+            }, 2200);
+
+        }
+        //Scroll Verticale
+        // Dal centro a sinistra
+        function scrollElCenterLeft(elemento) {
+
+        elemento.classList.add('move-center-left');
+        let disbandClass = setTimeout(() => {
+            elemento.classList.remove('move-center-left');
+
+        }, 2200);
+
         }
 
         /** Crea degli elementi con classe e li aggiunge all'elemento padre, il numero è specificabile */
-        function createElementAppend (elementoDaCreare, classe, contenuto, elementoGenitore, numeroElementi){
-            
-            for(let i= 0; i<numeroElementi; i++){
+        function createElementAppend(elementoDaCreare, classe, contenuto, elementoGenitore, numeroElementi) {
+
+            for (let i = 0; i < numeroElementi; i++) {
 
                 let newEl = document.createElement(elementoDaCreare);
                 newEl.classList.add(classe);
                 newEl.innerHTML = contenuto;
-            
+
                 elementoGenitore.append(newEl);
 
             }
         }
 
         //creazione Layout
-        function creaContenutoMain(contatore){
+        //Ogni funzione creaContenuto, gestisce l'aspetto e il contenuto del singolo layout scrollabile
+        //per mantenere fluide le animazioni ho dovuto separare la logica della creazione per posizione 
+        //rispetto allo schermo: Questo Comporta che ogni elemento creato ha dei contenitori con classi 
+        //nominate in modo diverso ma che svolgono la stessa funzione, cosi da rendere possibile l'illusione 
+        //dello slide.
+
+        function creaContenutoMain(contatore) {
+            //my container - il main
             createElementAppend('div', '_my_container', '', MainScrollableEl, 1);
-            let containersMain =  document.querySelector('._my_container');
+            let containersMain = document.querySelector('._my_container');
+            containersMain.classList.add('d-flex', 'flex-column')
             
+            //title - Titolo della pagina
             createElementAppend('h1', 'title', confArray[contatore][0], containersMain, 1);
+           
+
+            //_my_container-main - Body della pagina
             createElementAppend('div', '_my_container-main', confArray[contatore][1], containersMain, 1);
+            
+
+                //Se è vero isSlideble allora crea dei bottoni in absolute 
+                if (confArray[contatore][2]) {
+                createElementAppend('button', 'btn-arrow-left', '<i class="fa-solid fa-caret-left"></i>', containersMain, 1);
+                createElementAppend('button', 'btn-arrow-right', '<i class="fa-solid fa-caret-right"></i>', containersMain, 1);
+                let btnLeft = document.querySelector('.btn-arrow-left');
+                let btnRight = document.querySelector('.btn-arrow-right');
+                
+                btnLeft.classList.add('btn', 'btn-secondary', 'rounded-circle')
+                btnRight.classList.add('btn', 'btn-secondary', 'rounded-circle')
+
+                createElementAppend('div', 'row', containersMain, 1)
+                for (element in confArray[contatore][3]) {
+                    createElementAppend('span', 'span', 'ciao', containersMain, 1)
+                }
+            }
+
 
         }
 
-        function creaContenutoTop(contatore){
+        function creaContenutoTop(contatore) {
             createElementAppend('div', '_my_container_pre', '', TopScrollableEl, 1);
-            let containersTop =  document.querySelector('._my_container_pre');
-            
+            let containersTop = document.querySelector('._my_container_pre');
+            containersTop.classList.add('d-flex', 'flex-column')
+
             createElementAppend('h1', 'title', confArray[contatore][0], containersTop, 1);
-            createElementAppend('div', '_my_container_pre-main', confArray[contatore][1], containersTop, 1);
+            createElementAppend('div', '_my_container_main', confArray[contatore][1], containersTop, 1);
+            if (confArray[contatore][2]) {
+                createElementAppend('button', 'btn-arrow-left-top', '<i class="fa-solid fa-caret-left"></i>', containersTop, 1);
+                createElementAppend('button', 'btn-arrow-right-top', '<i class="fa-solid fa-caret-right"></i>', containersTop, 1);
+                let btnLeftTop = document.querySelector('.btn-arrow-left-top');
+                let btnRightTop = document.querySelector('.btn-arrow-right-top');
+                //console.log(btnRight)
+                btnLeftTop.classList.add('btn', 'btn-secondary', 'rounded-circle')
+                btnRightTop.classList.add('btn', 'btn-secondary', 'rounded-circle')
+
+                createElementAppend('div', 'row', containersTop, 1)
+                for (element in confArray[contatore][3]) {
+                    createElementAppend('span', 'span', 'ciao', containersTop, 1)
+                }
+            }
         }
 
-        function creaContenutoBottom(contatore){
+        function creaContenutoBottom(contatore) {
             createElementAppend('div', '_my_container_post', '', BottomScrollableEl, 1);
-            let containersBottom =  document.querySelector('._my_container_post');
-            
+            let containersBottom = document.querySelector('._my_container_post');
+            containersBottom.classList.add('d-flex', 'flex-column')
+
             createElementAppend('h1', 'title', confArray[contatore][0], containersBottom, 1);
             createElementAppend('div', '_my_container-main', confArray[contatore][1], containersBottom, 1);
+            if (confArray[contatore][2]) {
+                createElementAppend('button', 'btn-arrow-left-bottom', '<i class="fa-solid fa-caret-left"></i>', containersBottom, 1);
+                createElementAppend('button', 'btn-arrow-right-bottom', '<i class="fa-solid fa-caret-right"></i>', containersBottom, 1);
+                let btnLeftBottom = document.querySelector('.btn-arrow-left-bottom');
+                let btnRightBottom = document.querySelector('.btn-arrow-right-bottom');
+                //console.log(btnRight)
+                btnLeftBottom.classList.add('btn', 'btn-secondary', 'rounded-circle')
+                btnRightBottom.classList.add('btn', 'btn-secondary', 'rounded-circle')
+
+                createElementAppend('div', 'row', containersBottom, 1)
+                for (element in confArray[contatore][3]) {
+                    createElementAppend('span', 'span', 'ciao', containersBottom, 1)
+                }
+            }
         }
         //Fine Funzioni
         //------------------------------------------------------
 
 
-        
+
         //scaffolding
         creaContenutoMain(contatore);
         creaContenutoTop(precontatore);
-        creaContenutoBottom(precontatore);
+        creaContenutoBottom(postcontatore);
         //------------------------------------------------------
 
-        
+
         window.onwheel = event => {
-            if(event.deltaY >= 0){
+            if (event.deltaY >= 0) {
                 // Scrolling Down with mouse
                 // console.log('Scroll Down', isAnimated);
 
-                if(isAnimated==false){
-                    isAnimated=true;
+                if (isAnimated == false) {
+                    isAnimated = true;
                     scrollElCenterDown(MainScrollableEl);
-                    scrollElBottomCenter(BottomScrollableEl); 
-                    let timer= setTimeout(()=> {
-                        isAnimated=false
-                    }, 2200)  
-                    
+                    scrollElBottomCenter(BottomScrollableEl);
+                    let timer = setTimeout(() => {
+                        isAnimated = false
+                    }, 2200)
+
                     contatore++;
-                    if(contatore==confArray.length){contatore=0} 
-                    if(contatore==0){precontatore=confArray.length-1}else{precontatore= contatore - 1;}
-                    if(contatore==confArray.length-1){postcontatore = 0}else{postcontatore= contatore + 1;} 
                     
+                    if (contatore == confArray.length) {
+                        contatore = 0
+                    }
+                    if (contatore == 0) {
+                        precontatore = confArray.length - 1
+                    } else {
+                        precontatore = contatore - 1;
+                    }
+                    if (contatore == confArray.length - 1) {
+                        postcontatore = 0
+                    } else {
+                        postcontatore = contatore + 1;
+                    }
+
                     // Creazione pagina principale
-                    let creazioneContenutoMain=setTimeout(()=>{
-                        MainScrollableEl.innerHTML='';
+                    let creazioneContenutoMain = setTimeout(() => {
+                        MainScrollableEl.innerHTML = '';
                         creaContenutoMain(contatore);
 
-                    },750)
+                    }, 750)
 
-                    let creazioneContenutoSecond=setTimeout(()=>{
+                    let creazioneContenutoSecond = setTimeout(() => {
 
-                        TopScrollableEl.innerHTML='';
+                        TopScrollableEl.innerHTML = '';
                         creaContenutoTop(precontatore);
 
-                        BottomScrollableEl.innerHTML='';
+                        BottomScrollableEl.innerHTML = '';
                         creaContenutoBottom(postcontatore);
-                    },1200)
+                    }, 1200)
                     //----------------------------
 
 
-                    console.log('contatore: ' + contatore)
-                    console.log('precontatore: ' + precontatore)
-                    console.log('postcontatore: ' + postcontatore)
+                    // console.log('contatore: ' + contatore)
+                    // console.log('precontatore: ' + precontatore)
+                    // console.log('postcontatore: ' + postcontatore)
                 }
 
             } else {
                 // Scrolling Up with mouse
                 //console.log('Scroll Up');
-                if(isAnimated==false){
-                    isAnimated=true;
+                if (isAnimated == false) {
+                    isAnimated = true;
                     scrollElCenterUp(MainScrollableEl)
                     scrollElTopCenter(TopScrollableEl);
-                    let timer= setTimeout(()=> {
-                        isAnimated=false
+                    let timer = setTimeout(() => {
+                        isAnimated = false
                     }, 2200)
-                    
+
                     contatore--;
-                    if(contatore==-1){contatore=confArray.length-1}
-                    if(contatore==0){precontatore=confArray.length-1}else{precontatore= contatore - 1;}
-                    if(contatore==confArray.length-1){postcontatore = 0}else{postcontatore= contatore + 1;}
+                    if (contatore == -1) {
+                        contatore = confArray.length - 1
+                    }
+                    if (contatore == 0) {
+                        precontatore = confArray.length - 1
+                    } else {
+                        precontatore = contatore - 1;
+                    }
+                    if (contatore == confArray.length - 1) {
+                        postcontatore = 0
+                    } else {
+                        postcontatore = contatore + 1;
+                    }
 
-                     // Creazione pagina principale
-                     let creazioneContenutoMain=setTimeout(()=>{
-                        MainScrollableEl.innerHTML='';
+                    // Creazione pagina principale
+                    let creazioneContenutoMain = setTimeout(() => {
+                        MainScrollableEl.innerHTML = '';
                         creaContenutoMain(contatore);
-                    },980);
-                    let creazioneContenutoSecond=setTimeout(()=>{
+                    }, 980);
 
-                    TopScrollableEl.innerHTML='';
-                    creaContenutoTop(precontatore);
+                    let creazioneContenutoSecond = setTimeout(() => {
 
-                    BottomScrollableEl.innerHTML='';
-                    creaContenutoBottom(postcontatore);
-                    },1200)
+                        TopScrollableEl.innerHTML = '';
+                        creaContenutoTop(precontatore);
+
+                        BottomScrollableEl.innerHTML = '';
+                        creaContenutoBottom(postcontatore);
+                    }, 1200)
                     //----------------------------
 
 
-                    console.log('contatore: ' + contatore)
-                    console.log('precontatore: ' + precontatore)
-                    console.log('postcontatore: ' + postcontatore)
-                } 
+                    // console.log('contatore: ' + contatore)
+                    // console.log('precontatore: ' + precontatore)
+                    // console.log('postcontatore: ' + postcontatore)
+                }
             }
-    
-            if(event.deltaX >= 0){
+
+            if (event.deltaX >= 0) {
                 // Scrolling Down with mouse
                 //console.log('Scroll Left');
             } else {
@@ -319,10 +417,7 @@
                 //console.log('Scroll Right');
             }
         }
-        
-    
-    
-        </script>
+    </script>
 </body>
 
 </html>
