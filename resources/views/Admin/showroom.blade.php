@@ -94,6 +94,11 @@
 
         {{-- main --}}
         <div class="_container-wrapper">
+            {{-- Counter --}}
+            <div class="counter-box d-flex justify-content-center align-item-center" id="counter">
+                
+            </div>
+
             <div class="__container p-pre" id="container-pre"></div>
 
             <div class="__container p-center" id="container-1"></div>
@@ -108,10 +113,12 @@
                 contenuto destra
             </div>
 
+            {{-- Background --}}
             <div class="background" id="background">
                 <div class="cerchio top-showroom" id="cerchio-top"></div>
                 <div class="cerchio bottom-showroom" id="cerchio-bottom"></div>
             </div>
+
         </div>
     </div>
 
@@ -127,6 +134,8 @@
 
         //navbar
         let navbar = document.querySelector('.navbar')
+
+        let indexBox=document.getElementById('counter')
 
         
         //------------------------------
@@ -231,7 +240,7 @@
             
             //impostare il colore sfondo dei progetti in base a quello dell'arrayconf
             if(confArray[contatore][2]==true){
-                containersMain.style="background-color:" +  confArray[contatore][4]+ "; color:white;" 
+                containersMain.style="color:white;" 
                 containersMain.classList.remove('justify-content-center', 'align-items-center');
                 navbar.classList.add("navbar-light");
             }
@@ -273,7 +282,7 @@
 
             //impostare il colore sfondo dei progetti in base a quello dell'arrayconf
             if(confArray[contatore][2]==true){
-                containersTop.style="background-color:" + confArray[contatore][4] + "; color:white;" 
+                containersTop.style="color:white;" 
                 containersTop.classList.remove('justify-content-center', 'align-items-center');
             }
              //title - Titolo della pagina
@@ -309,7 +318,7 @@
 
             //impostare il colore sfondo dei progetti in base a quello dell'arrayconf
             if(confArray[contatore][2]==true){
-                containersBottom.style="background-color:" + confArray[contatore][4] + "; color:white;" 
+                containersBottom.style="color:white;" 
                 containersBottom.classList.remove('justify-content-center', 'align-items-center');
             }
 
@@ -339,42 +348,60 @@
         function backgroundAnimation() {
             let cerchioTop=document.getElementById('cerchio-top')
             let cerchioBottom=document.getElementById('cerchio-bottom')
-            let title=document.querySelector('.title')
-
-            
+            let bg=document.getElementById('background')
+            let title=document.querySelectorAll('.title')
+            console.log('')
+                      
             switch (confArray[contatore][0]) {
                 case 'showroom':
-                    cerchioTop.style="top:0%; left:0%;scale:2.4;"
+                    cerchioTop.style="top:-30%; left:-20%;scale:3;"
                     cerchioBottom.style="bottom:0%; right:0%; scale:2;"
-
-                    console.log('sei nel showroom')
                     break;
                 case 'projects':
-                    cerchioTop.style="top:-40%; left:20%; scale:1.7;"
+                    cerchioTop.style="top:-10%; left:10%; scale:2.8;"
                     cerchioBottom.style="bottom:-40%; right:20%; scale:2.4;"
-
-                    console.log('sei nel projects')
                     break;
                 case 'contacts':
-                    cerchioTop.style="top:-60%; left:80%; scale:1.9;"
-                    cerchioBottom.style="bottom:-45%; right:80%; scale:2.9;"
-
-                    console.log('sei nel contact')
+                cerchioTop.style="top:-10%; left:10%; scale:2.8;"
+                    cerchioBottom.style="bottom:-40%; right:20%; scale:2.4;"
                     break;
                 case 'extra':
                     cerchioTop.style="top:-30%; left:50%;scale:2.4;"
                     cerchioBottom.style="bottom:0%; right:40%; scale:2.3;"
-                    
-                    console.log('sei nell extra')
                     break;
+            }
+
+            if(confArray[contatore][2]==true){
+                cerchioTop.style="top:-10%; left:10%; scale:2.8; border:1px solid white"
+                cerchioBottom.style="bottom:-40%; right:20%; scale:2.4;border:1px solid white"
+                cerchioTop.classList.add('cerchio-top-animazione')
+                cerchioBottom.classList.add('cerchio-bottom-animazione')
+                bg.style="background-color:"+confArray[contatore][4];
+            }else if(cerchioTop.classList.contains('cerchio-top-animazione')){
+                cerchioTop.classList.remove('cerchio-top-animazione')
+                cerchioBottom.classList.remove('cerchio-bottom-animazione')
+                bg.style="background-color:white";
+            }else{
+                bg.style="background-color:white";
+            }
         }
-    }
+
+        //comportamento indexbox
+        function indexBoxCreation(){
+            
+            for(let i = 0; i<confArray.length-1; i++){
+                createElementAppend('div', 'border-circle','', indexBox, 1)
+            } 
+        }
+
         //Fine Funzioni
         //------------------------------------------------------
-
-
-
+        
+        
+        
+        
         //scaffholding
+        indexBoxCreation();
         backgroundAnimation()
         creaContenutoMain(contatore);
         creaContenutoTop(precontatore);
