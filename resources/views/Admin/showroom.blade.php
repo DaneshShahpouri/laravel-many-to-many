@@ -150,7 +150,7 @@
             ['projects', 'Progetto1 di prova', true, ['pag1', 'pag2', 'pag3'], '#FF5154'],
             ['projects', 'Progetto2 di prova con elementi specifici', true, ['pag1', 'pag2', 'pag3','pag4' ,'pag5'], '#5E2A40'],
             ['contacts', 'sezione dedicata ai contatti', false],
-            ['extra', 'qui puoi vedere progetti extra', false, ['pag1', 'pag2']]
+            ['extra', 'qui puoi vedere progetti extra', false]
         ]
         let contatore = 0;
         let precontatore = confArray.length - 1;
@@ -248,7 +248,7 @@
             //title - Titolo della pagina
             createElementAppend('h1', 'title', confArray[contatore][0], containersMain, 1);
            
-
+           
             //_my_container-main - Body della pagina
             createElementAppend('div', '_my_container-main', confArray[contatore][1], containersMain, 1);
             
@@ -267,10 +267,6 @@
                     createElementAppend('span', 'span', 'ciao', containersMain, 1)
                 }
             }
-
-            
-
-
         }
 
         // TOP
@@ -389,9 +385,25 @@
         //comportamento indexbox
         function indexBoxCreation(){
             
-            for(let i = 0; i<confArray.length-1; i++){
-                createElementAppend('div', 'border-circle','', indexBox, 1)
+            for(let i = 0; i<=confArray.length-1; i++){
+                createElementAppend('div', 'border-circle','', indexBox, 1);
             } 
+
+        }
+
+        function indexBoxBehavior(){
+            
+            let indici = document.querySelectorAll('.border-circle')
+           
+            for(let i = 0; i<=confArray.length-1; i++){
+                indici[i].classList.remove('active')
+                if(confArray[contatore][2]==true){
+                  indici[i].style="background:white"  
+                }else{
+                    indici[i].style="background:black"  
+                }
+            } 
+            indici[contatore].classList.add('active')
         }
 
         //Fine Funzioni
@@ -442,6 +454,9 @@
                     
                     //Solo il main ha le animazioni del background
                     backgroundAnimation();
+                    //Comportamento indice
+                    indexBoxBehavior()
+
                     // Creazione pagina principale
                     let creazioneContenutoMain = setTimeout(() => {
                         MainScrollableEl.innerHTML = '';
@@ -494,6 +509,9 @@
 
                     //Solo il main ha le animazioni del background
                     backgroundAnimation();  
+                    //Comportamento indice
+                    indexBoxBehavior()
+                    
 
                     // Creazione pagina principale
                     let creazioneContenutoMain = setTimeout(() => {
