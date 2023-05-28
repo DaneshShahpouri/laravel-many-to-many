@@ -633,6 +633,11 @@
                //---------------
                 bg.style="background-color:white";
             }
+
+            if(confArray[contatore][0]=='extra'){
+                cerchioHiddenBottom.style="display:block; background-color:rgba(0, 0, 255, 0.3);bottom:-40%; right:20%; scale:2.4;border:1px solid white; border:none"
+               cerchioHiddenTop.style="display:block; background-color:rgba(255, 0, 0, 0.3) ;top:-10%; left:10%; scale:2.8; border:1px solid white; border:none"
+            }
         }
 
         //comportamento indexbox
@@ -707,25 +712,17 @@
             for(let i = 0; i<=links.length-1; i++){
                 links[i].addEventListener('click', ()=>{
                      
-                    console.log(contatoreOrizzontale)
-                        console.log(i)
+                    //console.log(contatoreOrizzontale)
+                        //console.log(i)
                     if(contatoreOrizzontale>=i){
-                        contatoreOrizzontale=i;
-                        if (isAnimated == false && contatoreOrizzontale>=0 && contatoreOrizzontale<confArray[contatore][3].length-1) {         
+                        if (isAnimated == false && i>=0 && i<confArray[contatore][3].length-1) {         
                             isAnimated = true;
+                            contatoreOrizzontale=i;
 
-
-                            if(contatoreOrizzontale<links.length-1){
-                                RightScrollableEl.innerHTML = '';
-                                creaContenutoRightSlide(contatore, contatoreOrizzontale + 1)
-                            }
-                            if(contatoreOrizzontale>0){
-                                LeftScrollableEl.innerHTML = '';
-                                creaContenutoLeftSlide(contatore, contatoreOrizzontale - 1)
-                            }
-
-                            scrollElCenterLeft(MainScrollableEl);
-                            scrollElLeftCenter(RightScrollableEl);
+                            LeftScrollableEl.innerHTML = '';
+                            creaContenutoLeftSlide(contatore, contatoreOrizzontale)
+                            scrollElCenterRight(MainScrollableEl);
+                            scrollElRightCenter(LeftScrollableEl);
 
                             let timer = setTimeout(() => {
                                     isAnimated = false
@@ -736,11 +733,14 @@
                             
                             // Creazione pagina principale
                             let creazioneContenutoMain = setTimeout(() => {
-                                MainScrollableEl.innerHTML = '';
-                                creaContenutoMainSlide(contatore, contatoreOrizzontale)
+                                if(contatoreOrizzontale==0){
+                                    MainScrollableEl.innerHTML = '';
+                                    creaContenutoMain(contatore)
+                                }else{
+                                    MainScrollableEl.innerHTML = '';
+                                    creaContenutoMainSlide(contatore, contatoreOrizzontale)
+                                }
                                 }, 980);
-
-                            
 
                             miniIndexBoxBehavior();
                             // Layout Delle foto
@@ -754,43 +754,28 @@
                                     layout.style="opacity:0"
                                 }
                             }
-                         
+                            
                         }
-                    }else if(contatoreOrizzontale>=i){
-                        contatoreOrizzontale=i;
-                        if (isAnimated == false && contatoreOrizzontale>0 && contatoreOrizzontale<=confArray[contatore][3].length-1) {
+                    }else if(contatoreOrizzontale<i){
+                
+                        if (isAnimated == false && i>0 && i<=confArray[contatore][3].length-1) {
                             isAnimated = true;
                             
-                            if(contatoreOrizzontale<links.length-1){
-                                RightScrollableEl.innerHTML = '';
-                                creaContenutoRightSlide(contatore, contatoreOrizzontale + 1)
-                            }
-                            
-                            if(contatoreOrizzontale>0){
-                                LeftScrollableEl.innerHTML = '';
-                                creaContenutoLeftSlide(contatore, contatoreOrizzontale - 1)
-                            }
+                            contatoreOrizzontale=i;
+                        
+                            RightScrollableEl.innerHTML = '';
+                            creaContenutoRightSlide(contatore, contatoreOrizzontale)
+                    
+                            scrollElCenterLeft(MainScrollableEl);
+                            scrollElLeftCenter(RightScrollableEl);
                             // contatoreOrizzontale--;
                             
                             // Creazione pagina principale
                             let creazioneContenutoMain = setTimeout(() => {
                                     MainScrollableEl.innerHTML = '';
-                                    if(contatoreOrizzontale==0){
-                                        creaContenutoMain(contatore);
-                                    }else{
                                         creaContenutoMainSlide(contatore, contatoreOrizzontale)
-                                    }
                                 }, 980);
-                        
-                                let creazioneContenutoSecond = setTimeout(() => {
-                                    LeftScrollableEl.innerHTML = '';
-                                    creaContenutoLeftSlide(contatore, contatoreOrizzontale - 1)
-                                    RightScrollableEl.innerHTML = '';
-                                    creaContenutoRightSlide(contatore, contatoreOrizzontale + 1)            
-                                }, 1200)
-
-                                scrollElCenterRight(MainScrollableEl);
-                                scrollElRightCenter(LeftScrollableEl);
+                                
                                 let timer = setTimeout(() => {
                                     isAnimated = false
                                 }, 2200)
@@ -810,11 +795,8 @@
                         }
                     }
                 )}
-            }
-            
-            
-            
-            
+        }
+         
             //Funzione di scroll
         function scrollDown(){
                 contatoreOrizzontale=0;
@@ -921,9 +903,12 @@
         function scrollLeft(){
             if (isAnimated == false && contatoreOrizzontale>0 && contatoreOrizzontale<=confArray[contatore][3].length-1) {
                 isAnimated = true;
-
-                scrollElCenterRight(MainScrollableEl);
-                scrollElRightCenter(LeftScrollableEl);
+                LeftScrollableEl.innerHTML = '';
+                    creaContenutoLeftSlide(contatore, contatoreOrizzontale - 1)
+                    RightScrollableEl.innerHTML = '';
+                    creaContenutoRightSlide(contatore, contatoreOrizzontale + 1)  
+                    scrollElCenterRight(MainScrollableEl);
+                    scrollElRightCenter(LeftScrollableEl);
                 let timer = setTimeout(() => {
                     isAnimated = false
                 }, 2200)
@@ -963,6 +948,11 @@
         function scrollRight(){
             if (isAnimated == false && contatoreOrizzontale>=0 && contatoreOrizzontale<confArray[contatore][3].length-1) {         
                     isAnimated = true;
+                    LeftScrollableEl.innerHTML = '';
+                    creaContenutoLeftSlide(contatore, contatoreOrizzontale - 1)
+                    RightScrollableEl.innerHTML = '';
+                    creaContenutoRightSlide(contatore, contatoreOrizzontale + 1)
+
                     scrollElCenterLeft(MainScrollableEl);
                     scrollElLeftCenter(RightScrollableEl);
                     let timer = setTimeout(() => {
