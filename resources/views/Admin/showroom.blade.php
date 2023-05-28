@@ -94,10 +94,11 @@
 
         {{-- main --}}
         <div class="_container-wrapper">
+            {{-- minicounter --}}
+            <div class="counter-box hidden d-flex justify-content-center align-item-center" id="mini-counter"></div>
             {{-- Counter --}}
-            <div class="counter-box d-flex justify-content-center align-item-center" id="counter">
-                
-            </div>
+            <div class="counter-box d-flex justify-content-center align-item-center" id="counter"></div>
+            
 
             <div class="__container p-pre" id="container-pre"></div>
 
@@ -115,10 +116,11 @@
 
             {{-- Background --}}
             <div class="background" id="background">
-                <div class="cerchio top-showroom" id="cerchio-top"></div>
-                <div class="cerchio bottom-showroom" id="cerchio-bottom"></div>
+                <div class="background layout-black bg-dark" id="layout"></div>
                 <div class="cerchio hidden top-showroom" id="cerchio-top-hidden"></div>
                 <div class="cerchio hidden bottom-showroom" id="cerchio-bottom-hidden"></div>
+                <div class="cerchio top-showroom" id="cerchio-top"></div>
+                <div class="cerchio bottom-showroom" id="cerchio-bottom"></div>
             </div>
 
         </div>
@@ -127,6 +129,10 @@
 
 
     <script>
+        //------------------------------
+        // Dati di configurazione
+        //------------------------------
+
         //Scrollable
         let MainScrollableEl = document.getElementById('container-1')
         let TopScrollableEl = document.getElementById('container-pre')
@@ -137,25 +143,27 @@
         //navbar
         let navbar = document.getElementById('navbar')
 
+        //contatorigrafici
         let indexBox=document.getElementById('counter')
+        let miniIndexBox=document.getElementById('mini-counter')
 
+        //
         
-        //------------------------------
-        // Dati di configurazione
-        //------------------------------
         //VariabiliGlobali
         let isAnimated = false;
+
         //Titolo della pagina | Descrizione | isSlideble | se si: array di pagine del progetto scrollorizzontale 
         let confArray = [
             ['showroom', 'Sezione della pagina dedicata alla presentazione', false],
-            ['projects', 'Sezione della pagina dedicata ai progetti', false],
-            ['projects', 'Progetto1 di prova', true, ['pag1', 'pag2', 'pag3'], '#FF5154'],
-            ['projects', 'Progetto2 di prova con elementi specifici', true, ['pag1', 'pag2', 'pag3','pag4' ,'pag5'], '#5E2A40'],
+            ['projects', 'Qui di seguito troverai i vari progetti e potrai approfondirne i dettagli', false],
+            ['projects', "Questo Progetto è una prova incosistente, rappresentazione della manchevolezza uamna, il vuoto come presenza fissa, l'incosistenza dell'esperire umano. Cancellami.", true, ['Progetto di prova esempio', 'https://sitiwebfox.it/images/realizzazione-siti-web-professionali.png', 'https://kinsta.com/it/wp-content/uploads/sites/2/2020/02/migliori-pratiche-di-web-design-1024x512.jpg'], '#FF5154'],
+            ['projects', 'Progetto2 di prova con elementi specifici per verede che succede se metto info lunghe che sembrano volere dire  qualcosa.', true, ['Prova due - prova', 'https://kinsta.com/it/wp-content/uploads/sites/2/2021/09/how-to-translate-a-website-1024x512.jpeg', 'https://www.ionos.it/digitalguide/fileadmin/DigitalGuide/Teaser/web-apps-t.jpg','https://www.raiscuola.rai.it/cropgd/1900x1069/dl/img/2021/02/09/1612868746079_monitor-1307227_1920.jpg' ,'https://files.spazioweb.it/32/3d/323d8cfb-176d-4c90-9ba9-a4fe6eab5d58.jpeg'], '#5E2A40'],
             ['contacts', 'sezione dedicata ai contatti', false],
             ['extra', 'qui puoi vedere progetti extra', false]
         ]
+        
+        //contatori logici
         let contatoreOrizzontale = 0;
-
         let contatore = 0;
         let precontatore = confArray.length - 1;
         let postcontatore = 1;
@@ -282,11 +290,21 @@
                 containersMain.style="color:white;" 
                 containersMain.classList.remove('justify-content-center', 'align-items-center');
                 navbar.classList.add("navbar-light");
+
+                miniIndexBox.classList.remove('hidden')
             }
             
             //title - Titolo della pagina
-            createElementAppend('h1', 'title', confArray[contatore][0], containersMain, 1);
+            if(confArray[contatore][2]==true){
+                createElementAppend('h1', 'title', confArray[contatore][3][0], containersMain, 1);
+            }else{
+                createElementAppend('h1', 'title', confArray[contatore][0], containersMain, 1);
+            }
            
+            let elTitle = document.querySelector("._my_container .title");
+            if (!(confArray[contatore][2])){
+                elTitle.classList.add('bordo-bianco')
+            }
            
             //_my_container-main - Body della pagina
             createElementAppend('div', '_my_container-main', confArray[contatore][1], containersMain, 1);
@@ -311,9 +329,7 @@
                 })
                 
                 createElementAppend('div', 'row', containersMain, 1)
-                for (element in confArray[contatore][3]) {
-                    createElementAppend('span', 'span', 'ciao', containersMain, 1)
-                }
+                
             }
         }
 
@@ -329,9 +345,12 @@
                 containersTop.style="color:white;" 
                 containersTop.classList.remove('justify-content-center', 'align-items-center');
             }
-             //title - Titolo della pagina
-            createElementAppend('h1', 'title', confArray[contatore][0], containersTop, 1);
-
+            //title - Titolo della pagina
+            if(confArray[contatore][2]==true){
+                createElementAppend('h1', 'title', confArray[contatore][3][0], containersTop, 1);
+            }else{
+                createElementAppend('h1', 'title', confArray[contatore][0], containersTop, 1);
+            }
             //_my_container-main - Body della pagina
             createElementAppend('div', '_my_container_main', confArray[contatore][1], containersTop, 1);
 
@@ -347,9 +366,7 @@
                 btnRightTop.classList.add('btn', 'rounded-circle')
 
                 createElementAppend('div', 'row', containersTop, 1)
-                for (element in confArray[contatore][3]) {
-                    createElementAppend('span', 'span', 'ciao', containersTop, 1)
-                }
+                
             }
         }
 
@@ -366,8 +383,12 @@
                 containersBottom.classList.remove('justify-content-center', 'align-items-center');
             }
 
-            createElementAppend('h1', 'title', confArray[contatore][0], containersBottom, 1);
-            
+             //title - Titolo della pagina
+             if(confArray[contatore][2]==true){
+                createElementAppend('h1', 'title', confArray[contatore][3][0], containersBottom, 1);
+            }else{
+                createElementAppend('h1', 'title', confArray[contatore][0], containersBottom, 1);
+            }
             //_my_container-main - Body della pagina
             createElementAppend('div', '_my_container-main', confArray[contatore][1], containersBottom, 1);
             
@@ -381,30 +402,26 @@
                 btnRightBottom.classList.add('btn',  'rounded-circle')
 
                 createElementAppend('div', 'row', containersBottom, 1)
-                for (element in confArray[contatore][3]) {
-                    createElementAppend('span', 'span', 'ciao', containersBottom, 1)
-                }
+                
             }
         }
 
         //ContenutoSLideOrizzontali
-         // MainSlyde
+        // MainOrizzontale
         function creaContenutoMainSlide(contatore, contatoreOrizzontale) {
 
             //my container - il main
             createElementAppend('div', '_my_container_secondary', '', MainScrollableEl, 1);
             let containersMainSlide = document.querySelector('._my_container_secondary');
+            containersMainSlide.style="color:white";
             containersMainSlide.classList.add('d-flex', 'flex-column', 'justify-content-center', 'align-items-center')
             
-            
-            //title - Titolo della pagina
-            createElementAppend('h1', 'title', confArray[contatore][3][contatoreOrizzontale], containersMainSlide, 1);
-            
-            
             //_my_container-main - Body della pagina
-            createElementAppend('div', '_my_img-wrapper', confArray[contatore][1], containersMainSlide, 1);
+            createElementAppend('div', '_my_img-wrapper', '', containersMainSlide, 1);
             let imgWrapper= document.querySelector('._my_img-wrapper');
             createElementAppend('img','img', '', imgWrapper, 1)
+            let img = document.querySelector("._my_img-wrapper .img");
+            img.src = confArray[contatore][3][contatoreOrizzontale] ;
             
             
 
@@ -429,6 +446,7 @@
           }
         }
 
+        //LEFT
         function creaContenutoLeftSlide(contatore, contatoreOrizzontale) {
           if(contatoreOrizzontale==0){
  
@@ -438,10 +456,9 @@
             containersLeft.classList.add('d-flex', 'flex-column',)
             navbar.classList.add("navbar-light");
             containersLeft.style="color:white;" 
-            
-            
-            //title - Titolo della pagina
-            createElementAppend('h1', 'title', confArray[contatore][0], containersLeft, 1);
+           
+             //title - Titolo della pagina
+             createElementAppend('h1', 'title', confArray[contatore][3][0], containersLeft, 1);
            
            
             //_my_container-main - Body della pagina
@@ -467,27 +484,22 @@
                 })
                 
                 createElementAppend('div', 'row', containersLeft, 1)
-                for (element in confArray[contatore][3]) {
-                    createElementAppend('span', 'span', 'ciao', containersLeft, 1)
-                }
+                
             }
           }else{
               
             //my container - il main
             createElementAppend('div', '_my_container_left_secondary', '', LeftScrollableEl, 1);
             let containersLeft = document.querySelector('._my_container_left_secondary');
+            containersLeft.style="color:white";
             containersLeft.classList.add('d-flex', 'flex-column','justify-content-center', 'align-items-center')
-            
-            
-            //title - Titolo della pagina
-            createElementAppend('h1', 'title', confArray[contatore][3][contatoreOrizzontale], containersLeft, 1);
-           
            
             //_my_container-main - Body della pagina
-            createElementAppend('div', '_my_img-wrapper-left', confArray[contatore][1], containersLeft, 1);
+            createElementAppend('div', '_my_img-wrapper-left', '', containersLeft, 1);
             let imgWrapperLeft= document.querySelector('._my_img-wrapper-left');
             createElementAppend('img','img', '', imgWrapperLeft, 1)
-            
+            let img = document.querySelector("._my_img-wrapper-left .img");
+            img.src = confArray[contatore][3][contatoreOrizzontale] ;
             
   
                 //Se è vero isSlideble allora crea dei bottoni in absolute 
@@ -513,22 +525,23 @@
           }
         }
 
+        //RIGHT
         function creaContenutoRightSlide(contatore, contatoreOrizzontale) {
           
             
           //my container - il main
           createElementAppend('div', '_my_container_right_secondary', '', RightScrollableEl, 1);
           let containersRight = document.querySelector('._my_container_right_secondary');
+          containersRight.style="color:white";
           containersRight.classList.add('d-flex', 'flex-column',  'justify-content-center', 'align-items-center')
           
-          //title - Titolo della pagina
-          createElementAppend('h1', 'title', confArray[contatore][3][contatoreOrizzontale], containersRight, 1);
-         
          
           //_my_container-main - Body della pagina
-          createElementAppend('div', '_my_img-wrapper-right', confArray[contatore][1], containersRight, 1);
+          createElementAppend('div', '_my_img-wrapper-right', '', containersRight, 1);
           let imgWrapper= document.querySelector('._my_img-wrapper-right');
-          createElementAppend('img','img', '', imgWrapper, 1)
+          createElementAppend('img','img', '', imgWrapper, 1);
+          let img = document.querySelector("._my_img-wrapper-right .img");
+            img.src = confArray[contatore][3][contatoreOrizzontale] ;
           
           
 
@@ -634,6 +647,28 @@
 
         }
 
+        function miniIndexBoxCreation(){
+            
+            miniIndexBox.innerHTML="";
+            for(let i = 0; i<=confArray[contatore][3].length-1; i++){
+                createElementAppend('div', 'border-circle-mini','', miniIndexBox, 1);
+            } 
+
+            let indici = document.querySelectorAll('.border-circle-mini');
+            indici[0].classList.add('active');
+
+        }
+
+        function miniIndexBoxBehavior(){
+            
+            let indici = document.querySelectorAll('.border-circle-mini')
+          
+            for(let i = 0; i<=confArray[contatore][3].length-1; i++){
+                indici[i].classList.remove('active')
+            } 
+            indici[contatoreOrizzontale].classList.add('active')
+        }
+
         function indexBoxBehavior(){
             
             let indici = document.querySelectorAll('.border-circle')
@@ -667,9 +702,122 @@
                 }
         }
 
-        //Funzione di scroll
+        function miniIndexBehavior(){
+            let links=document.querySelectorAll('.border-circle-mini');
+            for(let i = 0; i<=links.length-1; i++){
+                links[i].addEventListener('click', ()=>{
+                     
+                    console.log(contatoreOrizzontale)
+                        console.log(i)
+                    if(contatoreOrizzontale>=i){
+                        contatoreOrizzontale=i;
+                        if (isAnimated == false && contatoreOrizzontale>=0 && contatoreOrizzontale<confArray[contatore][3].length-1) {         
+                            isAnimated = true;
+
+
+                            if(contatoreOrizzontale<links.length-1){
+                                RightScrollableEl.innerHTML = '';
+                                creaContenutoRightSlide(contatore, contatoreOrizzontale + 1)
+                            }
+                            if(contatoreOrizzontale>0){
+                                LeftScrollableEl.innerHTML = '';
+                                creaContenutoLeftSlide(contatore, contatoreOrizzontale - 1)
+                            }
+
+                            scrollElCenterLeft(MainScrollableEl);
+                            scrollElLeftCenter(RightScrollableEl);
+
+                            let timer = setTimeout(() => {
+                                    isAnimated = false
+                            }, 2200)
+
+                            // if(contatoreOrizzontale=!0 && contatoreOrizzontal)
+                            
+                            
+                            // Creazione pagina principale
+                            let creazioneContenutoMain = setTimeout(() => {
+                                MainScrollableEl.innerHTML = '';
+                                creaContenutoMainSlide(contatore, contatoreOrizzontale)
+                                }, 980);
+
+                            
+
+                            miniIndexBoxBehavior();
+                            // Layout Delle foto
+                            if(confArray[contatore][2]){
+                                let layout = document.getElementById('layout');
+                                if(contatoreOrizzontale==0){
+                                    layout.style="opacity:0"
+                                }else if(contatoreOrizzontale>0){
+                                    layout.style="opacity:1";
+                                }else{
+                                    layout.style="opacity:0"
+                                }
+                            }
+                         
+                        }
+                    }else if(contatoreOrizzontale>=i){
+                        contatoreOrizzontale=i;
+                        if (isAnimated == false && contatoreOrizzontale>0 && contatoreOrizzontale<=confArray[contatore][3].length-1) {
+                            isAnimated = true;
+                            
+                            if(contatoreOrizzontale<links.length-1){
+                                RightScrollableEl.innerHTML = '';
+                                creaContenutoRightSlide(contatore, contatoreOrizzontale + 1)
+                            }
+                            
+                            if(contatoreOrizzontale>0){
+                                LeftScrollableEl.innerHTML = '';
+                                creaContenutoLeftSlide(contatore, contatoreOrizzontale - 1)
+                            }
+                            // contatoreOrizzontale--;
+                            
+                            // Creazione pagina principale
+                            let creazioneContenutoMain = setTimeout(() => {
+                                    MainScrollableEl.innerHTML = '';
+                                    if(contatoreOrizzontale==0){
+                                        creaContenutoMain(contatore);
+                                    }else{
+                                        creaContenutoMainSlide(contatore, contatoreOrizzontale)
+                                    }
+                                }, 980);
+                        
+                                let creazioneContenutoSecond = setTimeout(() => {
+                                    LeftScrollableEl.innerHTML = '';
+                                    creaContenutoLeftSlide(contatore, contatoreOrizzontale - 1)
+                                    RightScrollableEl.innerHTML = '';
+                                    creaContenutoRightSlide(contatore, contatoreOrizzontale + 1)            
+                                }, 1200)
+
+                                scrollElCenterRight(MainScrollableEl);
+                                scrollElRightCenter(LeftScrollableEl);
+                                let timer = setTimeout(() => {
+                                    isAnimated = false
+                                }, 2200)
+                                
+                                miniIndexBoxBehavior();
+                                if(confArray[contatore][2]){
+                                    let layout = document.getElementById('layout');
+                                    if(contatoreOrizzontale==0){
+                                        layout.style="opacity:0"
+                                    }else if(contatoreOrizzontale>0){
+                                        layout.style="opacity:1";
+                                    }else{
+                                        layout.style="opacity:0"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                )}
+            }
+            
+            
+            
+            
+            //Funzione di scroll
         function scrollDown(){
-           
+                contatoreOrizzontale=0;
             
                 if (contatore == confArray.length) {
                     contatore = 0
@@ -706,16 +854,21 @@
                     BottomScrollableEl.innerHTML = '';
                     creaContenutoBottom(postcontatore);
                 }, 1200)
-                //----------------------------
+               
+                if(confArray[contatore][2]==true){
+                    miniIndexBoxCreation();
+                    miniIndexBehavior();
+                }else{
+                    miniIndexBox.innerHTML=""
+                }
 
-
-                // console.log('contatore: ' + contatore)
-                // console.log('precontatore: ' + precontatore)
-                // console.log('postcontatore: ' + postcontatore)
-            
+                // Layout Delle foto
+                let layout = document.getElementById('layout');
+                layout.style="opacity:0";    
         }
 
         function scrollUp(){
+            contatoreOrizzontale=0;
 
             if (contatore == -1) {
                 contatore = confArray.length - 1
@@ -752,33 +905,30 @@
                 BottomScrollableEl.innerHTML = '';
                 creaContenutoBottom(postcontatore);
             }, 1200)
-            //----------------------------
 
+            if(confArray[contatore][2]==true){
+                    miniIndexBoxCreation()
+                    miniIndexBehavior();
+                }else{
+                    miniIndexBox.innerHTML=""
+                }
 
-            // console.log('contatore: ' + contatore)
-            // console.log('precontatore: ' + precontatore)
-            // console.log('postcontatore: ' + postcontatore)
-        
+                // Layout Delle foto
+                let layout = document.getElementById('layout');
+                layout.style="opacity:0";  
         }
 
         function scrollLeft(){
-
-            if(contatoreOrizzontale>0 && contatoreOrizzontale<=confArray[contatore][3].length-1){
-                if (isAnimated == false) {
-               
+            if (isAnimated == false && contatoreOrizzontale>0 && contatoreOrizzontale<=confArray[contatore][3].length-1) {
                 isAnimated = true;
-                    
 
                 scrollElCenterRight(MainScrollableEl);
                 scrollElRightCenter(LeftScrollableEl);
-
                 let timer = setTimeout(() => {
                     isAnimated = false
                 }, 2200)
-
                 contatoreOrizzontale--;
-                
-            }
+            
                 // Creazione pagina principale
                 let creazioneContenutoMain = setTimeout(() => {
                     MainScrollableEl.innerHTML = '';
@@ -788,64 +938,69 @@
                         creaContenutoMainSlide(contatore, contatoreOrizzontale)
                     }
                 }, 980);
-    
+        
                 let creazioneContenutoSecond = setTimeout(() => {
-    
                     LeftScrollableEl.innerHTML = '';
                     creaContenutoLeftSlide(contatore, contatoreOrizzontale - 1)
-                    
-                //     creaContenutoTop(precontatore);
-    
                     RightScrollableEl.innerHTML = '';
-                    creaContenutoRightSlide(contatore, contatoreOrizzontale + 1)
-                    
-                 }, 1200)
-           
-                
+                    creaContenutoRightSlide(contatore, contatoreOrizzontale + 1)            
+                }, 1200)
+
+                miniIndexBoxBehavior();
+                if(confArray[contatore][2]){
+                    let layout = document.getElementById('layout');
+                    if(contatoreOrizzontale==0){
+                        layout.style="opacity:0"
+                    }else if(contatoreOrizzontale>0){
+                        layout.style="opacity:1";
+                    }else{
+                        layout.style="opacity:0"
+                    }
+                }
             }
         }
 
         function scrollRight(){
-
-            if(contatoreOrizzontale>=0 && contatoreOrizzontale<confArray[contatore][3].length-1){
-                if (isAnimated == false) {
-                    
+            if (isAnimated == false && contatoreOrizzontale>=0 && contatoreOrizzontale<confArray[contatore][3].length-1) {         
                     isAnimated = true;
                     scrollElCenterLeft(MainScrollableEl);
                     scrollElLeftCenter(RightScrollableEl);
                     let timer = setTimeout(() => {
                         isAnimated = false
                     }, 2200)
-
                     contatoreOrizzontale++;
-                    
-                    }
+                
                     // Creazione pagina principale
                 let creazioneContenutoMain = setTimeout(() => {
                     MainScrollableEl.innerHTML = '';
                     creaContenutoMainSlide(contatore, contatoreOrizzontale)
-                    
-                }, 980);
+                    }, 980);
 
                 let creazioneContenutoSecond = setTimeout(() => {
-    
                     LeftScrollableEl.innerHTML = '';
                     creaContenutoLeftSlide(contatore, contatoreOrizzontale - 1)
-                    
                     RightScrollableEl.innerHTML = '';
                     creaContenutoRightSlide(contatore, contatoreOrizzontale + 1)
-                
-                }, 1200)
+                    }, 1200)
 
+                miniIndexBoxBehavior();
+                // Layout Delle foto
+                if(confArray[contatore][2]){
+                    let layout = document.getElementById('layout');
+                    if(contatoreOrizzontale==0){
+                        layout.style="opacity:0"
+                    }else if(contatoreOrizzontale>0){
+                        layout.style="opacity:1";
+                    }else{
+                        layout.style="opacity:0"
+                    }
+                }
             }
-
-    }
+        }
         //Fine Funzioni
         //------------------------------------------------------
         
-        
-        
-        
+   
         //scaffholding
         indexBoxCreation();
         indexBehavior()
@@ -857,6 +1012,7 @@
 
     
 
+        //Scroll Event Listener
         window.onwheel = event => {
             if (event.deltaY >= 0) {
                 // Scrolling Down with mouse
