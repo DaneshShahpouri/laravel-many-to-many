@@ -2,6 +2,11 @@
 
 // projects Index
 //-------------------
+
+.hidden {
+    display: none;
+}
+
 .__my-card {
     position: relative;
     margin: 1em 0;
@@ -141,22 +146,7 @@
         z-index: 3;
         top: 0;
         width: 100%;
-        color: white;
 
-
-        #navbarSupportedContent {
-            ul {
-                li {
-                    a {
-                        &:hover {
-                            color: rgb(1, 146, 1)
-                        }
-
-                        ;
-                    }
-                }
-            }
-        }
     }
 
     .__container {
@@ -184,15 +174,23 @@
 
     //border: 1px solid #696363;
     transform: translateX(-50%);
-    z-index: 2;
+    z-index: 3;
 
     .border-circle {
+        cursor: pointer;
+        z-index: 4;
         border-radius: 50%;
         width: 7px;
         height: 7px;
         margin: .8em;
 
         background: #000;
+        transition: all .4s;
+
+        &:hover {
+            background: #00000093;
+            scale: 1.5;
+        }
 
     }
 
@@ -324,6 +322,14 @@
     animation: cerchio-bottom 15s infinite;
 }
 
+.cerchio-top-animazione-hidden {
+    animation: cerchio-top-hidden 20s infinite;
+}
+
+.cerchio-bottom-animazione-hidden {
+    animation: cerchio-bottom-hidden 20s infinite;
+}
+
 //-------------------------------------------------
 
 // Classi animazioni
@@ -353,7 +359,7 @@
 @keyframes moveCenterTop {
     0% {
         bottom: 100%;
-        opacity: 1
+        opacity: 1;
     }
 
     50% {
@@ -438,21 +444,21 @@
         top: -10%;
         left: 10%;
         scale: 2.8;
-        box-shadow: 2px 2px 2px rgba(255, 255, 255, 0.082);
+        background-color: rgba(255, 255, 255, 0.1)
     }
 
     50% {
         top: -11%;
         left: 12%;
         scale: 2.3;
-        box-shadow: 1px 1px 12px 1px rgb(255, 255, 255);
+        background-color: rgba(255, 255, 255, 0.05)
     }
 
     100% {
         top: -10%;
         left: 10%;
         scale: 2.8;
-        box-shadow: 2px 2px 2px rgba(255, 255, 255, 0.059);
+        background-color: rgba(255, 255, 255, 0.1)
     }
 }
 
@@ -462,17 +468,74 @@
         bottom: -40%;
         right: 20%;
         scale: 2.4;
+        background-color: rgba(255, 255, 255, 0.05)
     }
 
     50% {
         bottom: -41%;
         right: 21%;
         scale: 2.6;
+        background-color: rgba(255, 255, 255, 0.1)
     }
 
     100% {
         bottom: -40%;
         right: 20%;
         scale: 2.4;
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+
+}
+
+@keyframes cerchio-top-hidden {
+    0% {
+        top: -10%;
+        left: 10%;
+        scale: 2.8;
+        border: 1px solid white;
+        // box-shadow: 2px 2px 2px rgba(255, 255, 255, 0.082);
+    }
+
+    50% {
+        top: -11%;
+        left: 12%;
+        scale: 2.3;
+        border: 1px solid rgba(255, 255, 255, 0.596);
+        // box-shadow: 1px 1px 5px 1px rgba(255, 255, 255, 0.205);
+    }
+
+    100% {
+        top: -10%;
+        left: 10%;
+        scale: 2.8;
+        border: 1px solid white;
+        // box-shadow: 2px 2px 2px rgba(255, 255, 255, 0.059);
+    }
+}
+
+@keyframes cerchio-bottom-hidden {
+
+    0% {
+        bottom: -40%;
+        right: 20%;
+        scale: 2.4;
+        border: 1px solid rgba(255, 255, 255, 0.651);
+        // box-shadow: 2px 2px 2px rgba(255, 255, 255, 0.059);
+    }
+
+    50% {
+        bottom: -41%;
+        right: 21%;
+        scale: 2.6;
+        border: 1px solid white;
+        // box-shadow: 1px 1px 5px 1px rgba(255, 255, 255, 0.205);
+    }
+
+    100% {
+        bottom: -40%;
+        right: 20%;
+        scale: 2.4;
+        border: 1px solid rgba(255, 255, 255, 0.651);
+        // box-shadow: 2px 2px 2px rgba(255, 255, 255, 0.059);
     }
 }

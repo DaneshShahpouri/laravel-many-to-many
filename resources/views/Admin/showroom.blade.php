@@ -25,7 +25,7 @@
 <body>
     <div id="showroom">
         {{-- Navbar --}}
-        <nav class="navbar navbar-expand-md">
+        <nav class="navbar navbar-expand-md" id="navbar">
             <div class="container">
                 <a class="navbar-brand d-flex align-items-center" href="{{ route('admin.home') }}">
                     <div class="logo_laravel">DS</div>
@@ -117,6 +117,8 @@
             <div class="background" id="background">
                 <div class="cerchio top-showroom" id="cerchio-top"></div>
                 <div class="cerchio bottom-showroom" id="cerchio-bottom"></div>
+                <div class="cerchio hidden top-showroom" id="cerchio-top-hidden"></div>
+                <div class="cerchio hidden bottom-showroom" id="cerchio-bottom-hidden"></div>
             </div>
 
         </div>
@@ -133,7 +135,8 @@
         let RightScrollableEl = document.getElementById('container-right')
 
         //navbar
-        let navbar = document.querySelector('.navbar')
+        let navbar = document.getElementById('navbar')
+        console.log(navbar)
 
         let indexBox=document.getElementById('counter')
 
@@ -344,9 +347,12 @@
         function backgroundAnimation() {
             let cerchioTop=document.getElementById('cerchio-top')
             let cerchioBottom=document.getElementById('cerchio-bottom')
+            let cerchioHiddenTop=document.getElementById('cerchio-top-hidden')
+            let cerchioHiddenBottom=document.getElementById('cerchio-bottom-hidden')
             let bg=document.getElementById('background')
-            let title=document.querySelectorAll('.title')
+            let titles=document.querySelectorAll('.title')
             console.log('')
+
                       
             switch (confArray[contatore][0]) {
                 case 'showroom':
@@ -368,16 +374,39 @@
             }
 
             if(confArray[contatore][2]==true){
+                navbar.classList.add('navbar-dark')
+                //Cerchi nascossti
+                cerchioHiddenBottom.style="display:block; background-color:rgba(0, 0, 0, 0) ;bottom:-40%; right:20%; scale:2.4;border:1px solid white"
+                cerchioHiddenTop.style="display:block; background-color:rgba(0, 0, 0, 0) ;top:-10%; left:10%; scale:2.8; border:1px solid white"
+                //---------------
+
                 cerchioTop.style="top:-10%; left:10%; scale:2.8; border:1px solid white"
                 cerchioBottom.style="bottom:-40%; right:20%; scale:2.4;border:1px solid white"
                 cerchioTop.classList.add('cerchio-top-animazione')
+                cerchioTop.style="background-color:rgba(255, 255, 255, 0.1); border:none;"
+                cerchioBottom.style="background-color:rgba(255, 255, 255, 0.1);border:none;"
                 cerchioBottom.classList.add('cerchio-bottom-animazione')
                 bg.style="background-color:"+confArray[contatore][4];
+
             }else if(cerchioTop.classList.contains('cerchio-top-animazione')){
+                navbar.classList.remove('navbar-dark')
                 cerchioTop.classList.remove('cerchio-top-animazione')
                 cerchioBottom.classList.remove('cerchio-bottom-animazione')
+                //Cerchi nascossti
+                cerchioHiddenBottom.style="display:block; background-color:rgba(0, 0, 0, 0.1) ;bottom:-40%; right:20%; scale:2.4;border:1px solid white; border:none"
+                cerchioHiddenTop.style="display:block; background-color:rgba(0, 0, 0, 0.1) ;top:-10%; left:10%; scale:2.8; border:1px solid white; border:none"
+                cerchioHiddenTop.classList.add('cerchio-top-animazione-hidden')
+                cerchioHiddenBottom.classList.add('cerchio-bottom-animazione-hidden')
+                //---------------
                 bg.style="background-color:white";
             }else{
+                navbar.classList.remove('navbar-dark')
+                //Cerchi nascossti
+               cerchioHiddenBottom.style="display:block; background-color:rgba(0, 0, 0, 0.1) ;bottom:-40%; right:20%; scale:2.4;border:1px solid white; border:none"
+               cerchioHiddenTop.style="display:block; background-color:rgba(0, 0, 0, 0.1) ;top:-10%; left:10%; scale:2.8; border:1px solid white; border:none"
+               cerchioHiddenTop.classList.add('cerchio-top-animazione-hidden')
+               cerchioHiddenBottom.classList.add('cerchio-bottom-animazione-hidden')
+               //---------------
                 bg.style="background-color:white";
             }
         }
@@ -388,6 +417,9 @@
             for(let i = 0; i<=confArray.length-1; i++){
                 createElementAppend('div', 'border-circle','', indexBox, 1);
             } 
+
+            let indici = document.querySelectorAll('.border-circle');
+            indici[contatore].classList.add('active');
 
         }
 
@@ -406,93 +438,74 @@
             indici[contatore].classList.add('active')
         }
 
-        //Fine Funzioni
-        //------------------------------------------------------
-        
-        
-        
-        
-        //scaffholding
-        indexBoxCreation();
-        backgroundAnimation()
-        creaContenutoMain(contatore);
-        creaContenutoTop(precontatore);
-        creaContenutoBottom(postcontatore);
-        //------------------------------------------------------
-
-
-        window.onwheel = event => {
-            if (event.deltaY >= 0) {
-                // Scrolling Down with mouse
-                // console.log('Scroll Down', isAnimated);
-
-                if (isAnimated == false) {
-                
-                    isAnimated = true;
-                    scrollElCenterDown(MainScrollableEl);
-                    scrollElBottomCenter(BottomScrollableEl);
-                    let timer = setTimeout(() => {
-                        isAnimated = false
-                    }, 2200)
-
-                    contatore++;
-                    
-                    
-                    if (contatore == confArray.length) {
-                        contatore = 0
+        //rende cliccabili le index in basso
+        function indexBehavior(){
+            let links=document.querySelectorAll('.border-circle');
+                for(let i = 0; i<=links.length-1; i++){
+                    if(contatore>=i){
+                        links[i].addEventListener('click', ()=>{
+                            contatore=i;
+                            scrollDown()  
+                        })
+                    }else if(contatore<i){
+                        links[i].addEventListener('click', ()=>{
+                            contatore=i;
+                            scrollUp()
+                        })
                     }
-                    if (contatore == 0) {
-                        precontatore = confArray.length - 1
-                    } else {
-                        precontatore = contatore - 1;
-                    }
-                    if (contatore == confArray.length - 1) {
-                        postcontatore = 0
-                    } else {
-                        postcontatore = contatore + 1;
-                    }
-                    
-                    //Solo il main ha le animazioni del background
-                    backgroundAnimation();
-                    //Comportamento indice
-                    indexBoxBehavior()
+                }
+        }
 
-                    // Creazione pagina principale
-                    let creazioneContenutoMain = setTimeout(() => {
-                        MainScrollableEl.innerHTML = '';
-                        creaContenutoMain(contatore);
-
-                    }, 750)
-
-                    let creazioneContenutoSecond = setTimeout(() => {
-
-                        TopScrollableEl.innerHTML = '';
-                        creaContenutoTop(precontatore);
-
-                        BottomScrollableEl.innerHTML = '';
-                        creaContenutoBottom(postcontatore);
-                    }, 1200)
-                    //----------------------------
-
-
-                    // console.log('contatore: ' + contatore)
-                    // console.log('precontatore: ' + precontatore)
-                    // console.log('postcontatore: ' + postcontatore)
+        //Funzione di scroll
+        function scrollDown(){
+           
+            
+                if (contatore == confArray.length) {
+                    contatore = 0
+                }
+                if (contatore == 0) {
+                    precontatore = confArray.length - 1
+                } else {
+                    precontatore = contatore - 1;
+                }
+                if (contatore == confArray.length - 1) {
+                    postcontatore = 0
+                } else {
+                    postcontatore = contatore + 1;
                 }
                 
+                //Solo il main ha le animazioni del background
+                backgroundAnimation();
+                //Comportamento indice
+                indexBoxBehavior()
+                
 
-            } else {
-                // Scrolling Up with mouse
-                //console.log('Scroll Up');
-                if (isAnimated == false) {
-                    isAnimated = true;
-                    scrollElCenterUp(MainScrollableEl)
-                    scrollElTopCenter(TopScrollableEl);
-                    let timer = setTimeout(() => {
-                        isAnimated = false
-                    }, 2200)
+                // Creazione pagina principale
+                let creazioneContenutoMain = setTimeout(() => {
+                    MainScrollableEl.innerHTML = '';
+                    creaContenutoMain(contatore);
 
-                    contatore--;
+                }, 750)
+
+                let creazioneContenutoSecond = setTimeout(() => {
+
+                    TopScrollableEl.innerHTML = '';
+                    creaContenutoTop(precontatore);
+
+                    BottomScrollableEl.innerHTML = '';
+                    creaContenutoBottom(postcontatore);
+                }, 1200)
+                //----------------------------
+
+
+                // console.log('contatore: ' + contatore)
+                // console.log('precontatore: ' + precontatore)
+                // console.log('postcontatore: ' + postcontatore)
+            
+        }
+
+        function scrollUp(){
+
                     if (contatore == -1) {
                         contatore = confArray.length - 1
                     }
@@ -510,7 +523,8 @@
                     //Solo il main ha le animazioni del background
                     backgroundAnimation();  
                     //Comportamento indice
-                    indexBoxBehavior()
+                    indexBoxBehavior();
+
                     
 
                     // Creazione pagina principale
@@ -533,7 +547,56 @@
                     // console.log('contatore: ' + contatore)
                     // console.log('precontatore: ' + precontatore)
                     // console.log('postcontatore: ' + postcontatore)
+                
+        }
+        //Fine Funzioni
+        //------------------------------------------------------
+        
+        
+        
+        
+        //scaffholding
+        indexBoxCreation();
+        indexBehavior()
+        backgroundAnimation()
+        creaContenutoMain(contatore);
+        creaContenutoTop(precontatore);
+        creaContenutoBottom(postcontatore);
+        //------------------------------------------------------
+
+    
+
+        window.onwheel = event => {
+            if (event.deltaY >= 0) {
+                // Scrolling Down with mouse
+                // console.log('Scroll Down', isAnimated);
+                if (isAnimated == false) {
+                
+                    isAnimated = true;
+                    scrollElCenterDown(MainScrollableEl);
+                    scrollElBottomCenter(BottomScrollableEl);
+                    let timer = setTimeout(() => {
+                        isAnimated = false
+                    }, 2200)
+
+                contatore++;
+                scrollDown();
                 }
+    
+            } else {
+                // Scrolling Up with mouse
+                //console.log('Scroll Up');
+                if (isAnimated == false) {
+                    isAnimated = true;
+                    scrollElCenterUp(MainScrollableEl)
+                    scrollElTopCenter(TopScrollableEl);
+                    let timer = setTimeout(() => {
+                        isAnimated = false
+                    }, 2200)
+
+                    contatore--;
+
+                    scrollUp();
             }
 
             if (event.deltaX >= 0) {
@@ -543,6 +606,7 @@
                 // Scrolling Up with mouse
                 //console.log('Scroll Right');
             }
+        }
         }
     </script>
 </body>
