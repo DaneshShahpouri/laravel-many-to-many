@@ -247,6 +247,7 @@
 }
 
 //container creati per gli slider
+._my_container_right_secondary,
 ._my_container_left_secondary,
 ._my_container_secondary,
 ._my_container_post,
@@ -259,6 +260,8 @@
 }
 
 //btn arrow
+.left-btn-arrow-left,
+.right-btn-arrow-left,
 .btn-arrow-left-bottom,
 .btn-arrow-left-top,
 .btn-arrow-left {
@@ -269,10 +272,17 @@
     height: 40px;
     margin-left: 1em;
     border: none;
-    color: rgba(255, 255, 255, 0.269);
-    background-color: rgba(0, 0, 0, 0.135);
+    color: rgba(255, 255, 255);
+    background-color: rgba(0, 0, 0, 0);
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.135);
+        color: rgba(255, 255, 255);
+    }
 }
 
+.left-btn-arrow-right,
+.right-btn-arrow-right,
 .btn-arrow-right-bottom,
 .btn-arrow-right-top,
 .btn-arrow-right {
@@ -283,12 +293,20 @@
     height: 40px;
     margin-right: 1em;
     border: none;
-    color: rgba(255, 255, 255, 0.269);
-    background-color: rgba(0, 0, 0, 0.135);
+    color: rgba(255, 255, 255);
+    background-color: rgba(0, 0, 0, 0);
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.135);
+        color: rgba(255, 255, 255);
+    }
+
     // transform: translateX(-100%);
 
 }
 
+._my_img-wrapper-right,
+._my_img-wrapper-left,
 ._my_img-wrapper {
     width: 100%;
     height: 100%;
