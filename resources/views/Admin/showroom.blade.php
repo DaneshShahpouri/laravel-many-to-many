@@ -110,7 +110,7 @@
             </div>
 
             <div class="__container p-right" id="container-right">
-                contenuto destra
+                <h1>contenuto destra</h1>
             </div>
 
             {{-- Background --}}
@@ -136,7 +136,6 @@
 
         //navbar
         let navbar = document.getElementById('navbar')
-        console.log(navbar)
 
         let indexBox=document.getElementById('counter')
 
@@ -155,6 +154,8 @@
             ['contacts', 'sezione dedicata ai contatti', false],
             ['extra', 'qui puoi vedere progetti extra', false]
         ]
+        let contatoreOrizzontale = 0;
+
         let contatore = 0;
         let precontatore = confArray.length - 1;
         let postcontatore = 1;
@@ -211,6 +212,41 @@
 
         }
 
+         // Dal centro a destra
+        function scrollElCenterRight(elemento) {
+
+            elemento.classList.add('move-center-right');
+                let disbandClass = setTimeout(() => {
+                elemento.classList.remove('move-center-right');
+
+            }, 2200);
+
+        }
+        
+        // Dal  destra a centro
+        function scrollElRightCenter(elemento) {
+
+            elemento.classList.add('move-right-center');
+                let disbandClass = setTimeout(() => {
+                elemento.classList.remove('move-right-center');
+
+            }, 2200);
+
+        }
+
+        // Dal  destra a centro
+        function scrollElLeftCenter(elemento) {
+
+            elemento.classList.add('move-left-center');
+                let disbandClass = setTimeout(() => {
+                elemento.classList.remove('move-left-center');
+
+            }, 2200);
+
+        }
+        
+        
+
         /** Crea degli elementi con classe e li aggiunge all'elemento padre, il numero è specificabile */
         function createElementAppend(elementoDaCreare, classe, contenuto, elementoGenitore, numeroElementi) {
 
@@ -265,6 +301,15 @@
                 btnLeft.classList.add('btn',  'rounded-circle')
                 btnRight.classList.add('btn',  'rounded-circle')
 
+                btnLeft.addEventListener('click', ()=>{
+                    console.log('tasto sinistro, funziona!')
+                    scrollLeft();
+                })
+                btnRight.addEventListener('click', ()=>{
+                    console.log('tasto destro, funziona!')
+                    scrollRight();
+                })
+                
                 createElementAppend('div', 'row', containersMain, 1)
                 for (element in confArray[contatore][3]) {
                     createElementAppend('span', 'span', 'ciao', containersMain, 1)
@@ -342,6 +387,189 @@
             }
         }
 
+        //ContenutoSLideOrizzontali
+         // MainSlyde
+        function creaContenutoMainSlide(contatore, contatoreOrizzontale) {
+
+            //my container - il main
+            createElementAppend('div', '_my_container_secondary', '', MainScrollableEl, 1);
+            let containersMainSlide = document.querySelector('._my_container_secondary');
+            containersMainSlide.classList.add('d-flex', 'flex-column',  'justify-content-center', 'align-items-center')
+            
+            //impostare il colore sfondo dei progetti in base a quello dell'arrayconf
+            if(confArray[contatore][2]==true){
+                
+                
+            }
+            
+            //title - Titolo della pagina
+            createElementAppend('h1', 'title', confArray[contatore][3][contatoreOrizzontale], containersMainSlide, 1);
+            
+            
+            //_my_container-main - Body della pagina
+            createElementAppend('div', '_my_img-wrapper', confArray[contatore][1], containersMainSlide, 1);
+            let imgWrapper= document.querySelector('._my_img-wrapper');
+            createElementAppend('img','img', '', imgWrapper, 1)
+            
+            
+
+                //Se è vero isSlideble allora crea dei bottoni in absolute 
+                if (confArray[contatore][2]) {
+                createElementAppend('button', 'btn-arrow-left', '<i class="fa-solid fa-caret-left"></i>', containersMainSlide, 1);
+                createElementAppend('button', 'btn-arrow-right', '<i class="fa-solid fa-caret-right"></i>', containersMainSlide, 1);
+                let btnLeft = document.querySelector('.btn-arrow-left');
+                let btnRight = document.querySelector('.btn-arrow-right');
+                
+                btnLeft.classList.add('btn',  'rounded-circle')
+                btnRight.classList.add('btn',  'rounded-circle')
+
+                btnLeft.addEventListener('click', ()=>{
+                    //console.log('tasto sinistro, funziona!')
+                    scrollLeft();
+                })
+                btnRight.addEventListener('click', ()=>{
+                    //console.log('tasto destro, funziona!')
+                    scrollRight();
+                })  
+          }
+        }
+
+        function creaContenutoLeftSlide(contatore, contatoreOrizzontale) {
+          if(contatoreOrizzontale==0){
+ 
+            //my container - il main
+            createElementAppend('div', '_my_container_left_secondary', '', LeftScrollableEl, 1);
+            let containersLeft = document.querySelector('._my_container_left_secondary');
+            containersLeft.classList.add('d-flex', 'flex-column')
+            navbar.classList.add("navbar-light");
+            containersLeft.style="color:white;" 
+            
+            
+            //title - Titolo della pagina
+            createElementAppend('h1', 'title', confArray[contatore][0], containersLeft, 1);
+           
+           
+            //_my_container-main - Body della pagina
+            createElementAppend('div', '_my_container-main', confArray[contatore][1], containersLeft, 1);
+            
+
+                //Se è vero isSlideble allora crea dei bottoni in absolute 
+                if (confArray[contatore][2]) {
+                createElementAppend('button', 'btn-arrow-left', '<i class="fa-solid fa-caret-left"></i>', containersLeft, 1);
+                createElementAppend('button', 'btn-arrow-right', '<i class="fa-solid fa-caret-right"></i>', containersLeft, 1);
+                let btnLeft = document.querySelector('.btn-arrow-left');
+                let btnRight = document.querySelector('.btn-arrow-right');
+                btnLeft.classList.add('btn',  'rounded-circle')
+                btnRight.classList.add('btn',  'rounded-circle')
+
+                btnLeft.addEventListener('click', ()=>{
+                    console.log('tasto sinistro, funziona!')
+                    scrollLeft();
+                })
+                btnRight.addEventListener('click', ()=>{
+                    console.log('tasto destro, funziona!')
+                    scrollRight();
+                })
+                
+                createElementAppend('div', 'row', containersLeft, 1)
+                for (element in confArray[contatore][3]) {
+                    createElementAppend('span', 'span', 'ciao', containersLeft, 1)
+                }
+            }
+          }else{
+              
+            //my container - il main
+            createElementAppend('div', '_my_container_left_secondary', '', LeftScrollableEl, 1);
+            let containersLeft = document.querySelector('._my_container_left_secondary');
+            containersLeft.classList.add('d-flex', 'flex-column',  'justify-content-center', 'align-items-center')
+            
+            //impostare il colore sfondo dei progetti in base a quello dell'arrayconf
+            if(confArray[contatore][2]==true){
+                 
+                
+            }
+            
+            //title - Titolo della pagina
+            createElementAppend('h1', 'title', confArray[contatore][3][contatoreOrizzontale], containersLeft, 1);
+           
+           
+            //_my_container-main - Body della pagina
+            createElementAppend('div', '_my_img-wrapper', confArray[contatore][1], containersLeft, 1);
+            let imgWrapperLeft= document.querySelector('._my_img-wrapper');
+            createElementAppend('img','img', '', imgWrapperLeft, 1)
+            
+            
+  
+                //Se è vero isSlideble allora crea dei bottoni in absolute 
+                if (confArray[contatore][2]) {
+                createElementAppend('button', 'btn-arrow-left', '<i class="fa-solid fa-caret-left"></i>', containersLeft, 1);
+                createElementAppend('button', 'btn-arrow-right', '<i class="fa-solid fa-caret-right"></i>', containersLeft, 1);
+                let btnLeft = document.querySelector('.btn-arrow-left');
+                let btnRight = document.querySelector('.btn-arrow-right');
+                btnLeft.classList.add('btn',  'rounded-circle')
+                btnRight.classList.add('btn',  'rounded-circle')
+  
+                btnLeft.addEventListener('click', ()=>{
+                    console.log('tasto sinistro, funziona!')
+                    scrollLeft();
+                })
+                btnRight.addEventListener('click', ()=>{
+                    console.log('tasto destro, funziona!')
+                    scrollRight();
+                })
+                   
+            }
+
+          }
+        }
+
+        function creaContenutoRightSlide(contatore, contatoreOrizzontale) {
+          
+            
+          //my container - il main
+          createElementAppend('div', '_my_container_right_secondary', '', RightScrollableEl, 1);
+          let containersRight = document.querySelector('._my_container_right_secondary');
+          containersRight.classList.add('d-flex', 'flex-column',  'justify-content-center', 'align-items-center')
+          
+          //impostare il colore sfondo dei progetti in base a quello dell'arrayconf
+          if(confArray[contatore][2]==true){
+               
+              
+          }
+          
+          //title - Titolo della pagina
+          createElementAppend('h1', 'title', confArray[contatore][3][contatoreOrizzontale], containersRight, 1);
+         
+         
+          //_my_container-main - Body della pagina
+          createElementAppend('div', '_my_img-wrapper', confArray[contatore][1], containersRight, 1);
+          let imgWrapperRight= document.querySelector('._my_img-wrapper');
+          createElementAppend('img','img', '', imgWrapperRight, 1)
+          
+          
+
+              //Se è vero isSlideble allora crea dei bottoni in absolute 
+              if (confArray[contatore][2]) {
+              createElementAppend('button', 'btn-arrow-left', '<i class="fa-solid fa-caret-left"></i>', containersRight, 1);
+              createElementAppend('button', 'btn-arrow-right', '<i class="fa-solid fa-caret-right"></i>', containersRight, 1);
+              let btnLeft = document.querySelector('.btn-arrow-left');
+              let btnRight = document.querySelector('.btn-arrow-right');
+              btnLeft.classList.add('btn',  'rounded-circle')
+              btnRight.classList.add('btn',  'rounded-circle')
+
+              btnLeft.addEventListener('click', ()=>{
+                  console.log('tasto sinistro, funziona!')
+                  scrollLeft();
+              })
+              btnRight.addEventListener('click', ()=>{
+                  console.log('tasto destro, funziona!')
+                  scrollRight();
+              })
+              
+              
+          }
+        }
+
 
         //Background Function
         function backgroundAnimation() {
@@ -351,7 +579,6 @@
             let cerchioHiddenBottom=document.getElementById('cerchio-bottom-hidden')
             let bg=document.getElementById('background')
             let titles=document.querySelectorAll('.title')
-            console.log('')
 
                       
             switch (confArray[contatore][0]) {
@@ -506,49 +733,139 @@
 
         function scrollUp(){
 
-                    if (contatore == -1) {
-                        contatore = confArray.length - 1
-                    }
-                    if (contatore == 0) {
-                        precontatore = confArray.length - 1
-                    } else {
-                        precontatore = contatore - 1;
-                    }
-                    if (contatore == confArray.length - 1) {
-                        postcontatore = 0
-                    } else {
-                        postcontatore = contatore + 1;
-                    }
+            if (contatore == -1) {
+                contatore = confArray.length - 1
+            }
+            if (contatore == 0) {
+                precontatore = confArray.length - 1
+            } else {
+                precontatore = contatore - 1;
+            }
+            if (contatore == confArray.length - 1) {
+                postcontatore = 0
+            } else {
+                postcontatore = contatore + 1;
+            }
 
-                    //Solo il main ha le animazioni del background
-                    backgroundAnimation();  
-                    //Comportamento indice
-                    indexBoxBehavior();
+            //Solo il main ha le animazioni del background
+            backgroundAnimation();  
+            //Comportamento indice
+            indexBoxBehavior();
 
+            
+
+            // Creazione pagina principale
+            let creazioneContenutoMain = setTimeout(() => {
+                MainScrollableEl.innerHTML = '';
+                creaContenutoMain(contatore);
+            }, 980);
+
+            let creazioneContenutoSecond = setTimeout(() => {
+
+                TopScrollableEl.innerHTML = '';
+                creaContenutoTop(precontatore);
+
+                BottomScrollableEl.innerHTML = '';
+                creaContenutoBottom(postcontatore);
+            }, 1200)
+            //----------------------------
+
+
+            // console.log('contatore: ' + contatore)
+            // console.log('precontatore: ' + precontatore)
+            // console.log('postcontatore: ' + postcontatore)
+        
+        }
+
+        function scrollLeft(){
+
+            if(contatoreOrizzontale>0 && contatoreOrizzontale<=confArray[contatore][3].length-1){
+                if (isAnimated == false) {
+               
+                isAnimated = true;
                     
 
-                    // Creazione pagina principale
-                    let creazioneContenutoMain = setTimeout(() => {
-                        MainScrollableEl.innerHTML = '';
-                        creaContenutoMain(contatore);
-                    }, 980);
+                scrollElCenterRight(MainScrollableEl);
+                scrollElRightCenter(LeftScrollableEl);
 
-                    let creazioneContenutoSecond = setTimeout(() => {
+                let timer = setTimeout(() => {
+                    isAnimated = false
+                }, 2200)
 
-                        TopScrollableEl.innerHTML = '';
-                        creaContenutoTop(precontatore);
-
-                        BottomScrollableEl.innerHTML = '';
-                        creaContenutoBottom(postcontatore);
-                    }, 1200)
-                    //----------------------------
-
-
-                    // console.log('contatore: ' + contatore)
-                    // console.log('precontatore: ' + precontatore)
-                    // console.log('postcontatore: ' + postcontatore)
+                contatoreOrizzontale--;
                 
+            }
+                // Creazione pagina principale
+                let creazioneContenutoMain = setTimeout(() => {
+                    MainScrollableEl.innerHTML = '';
+                    if(contatoreOrizzontale==0){
+                        creaContenutoMain(contatore);
+                    }else{
+                        creaContenutoMainSlide(contatore, contatoreOrizzontale)
+                    }
+                }, 980);
+    
+                let creazioneContenutoSecond = setTimeout(() => {
+    
+                    LeftScrollableEl.innerHTML = '';
+                    creaContenutoLeftSlide(contatore, contatoreOrizzontale - 1)
+                    
+                //     creaContenutoTop(precontatore);
+    
+                    RightScrollableEl.innerHTML = '';
+                    
+                    if(contatoreOrizzontale <= confArray[contatore][3].length){
+                         creaContenutoRightSlide(contatore, contatoreOrizzontale + 1)
+                    }else{
+                        creaContenutoMain(contatore);
+                    }
+                 }, 1200)
+           
+                
+            }
         }
+
+        function scrollRight(){
+
+            if(contatoreOrizzontale>=0 && contatoreOrizzontale<confArray[contatore][3].length-1){
+                if (isAnimated == false) {
+                    
+                    isAnimated = true;
+                    scrollElCenterLeft(MainScrollableEl);
+                    scrollElLeftCenter(RightScrollableEl);
+                    let timer = setTimeout(() => {
+                        isAnimated = false
+                    }, 2200)
+
+                    contatoreOrizzontale++;
+                    
+                    }
+                    // Creazione pagina principale
+                let creazioneContenutoMain = setTimeout(() => {
+                    MainScrollableEl.innerHTML = '';
+                    creaContenutoMainSlide(contatore, contatoreOrizzontale)
+                    
+                }, 980);
+
+                let creazioneContenutoSecond = setTimeout(() => {
+    
+                    LeftScrollableEl.innerHTML = '';
+                    creaContenutoLeftSlide(contatore, contatoreOrizzontale - 1)
+                    
+                //     creaContenutoTop(precontatore);
+
+                    RightScrollableEl.innerHTML = '';
+                    
+                    if(contatoreOrizzontale <= confArray[contatore][3].length){
+                        creaContenutoRightSlide(contatore, contatoreOrizzontale + 1)
+                    }else{
+                        creaContenutoMain(contatore);
+                    }
+                }, 1200)
+
+            }
+
+    }
         //Fine Funzioni
         //------------------------------------------------------
         
@@ -581,6 +898,11 @@
 
                 contatore++;
                 scrollDown();
+                contatoreOrizzontale=0
+                if(confArray[contatore][2]==true){
+                    RightScrollableEl.innerHTML="";
+                    creaContenutoRightSlide(contatore, contatoreOrizzontale+1)
+                }
                 }
     
             } else {
@@ -597,6 +919,7 @@
                     contatore--;
 
                     scrollUp();
+                    contatoreOrizzontale=0
             }
 
             if (event.deltaX >= 0) {

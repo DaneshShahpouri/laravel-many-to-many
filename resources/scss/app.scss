@@ -237,16 +237,18 @@
 }
 
 .p-left {
-    left: 0%;
-    bottom: 100%;
+    left: -100%;
+    bottom: 300%;
 }
 
 .p-right {
     left: 100%;
-    bottom: 100%;
+    bottom: 400%;
 }
 
-//btn arrow
+//container creati per gli slider
+._my_container_left_secondary,
+._my_container_secondary,
 ._my_container_post,
 ._my_container_pre,
 ._my_container {
@@ -256,6 +258,7 @@
     z-index: 6;
 }
 
+//btn arrow
 .btn-arrow-left-bottom,
 .btn-arrow-left-top,
 .btn-arrow-left {
@@ -284,6 +287,17 @@
     background-color: rgba(0, 0, 0, 0.135);
     // transform: translateX(-100%);
 
+}
+
+._my_img-wrapper {
+    width: 100%;
+    height: 100%;
+    padding: 3em;
+
+    img {
+        height: 100%;
+        object-fit: contain;
+    }
 }
 
 //-------------------------------------------------
@@ -332,7 +346,7 @@
 
 //-------------------------------------------------
 
-// Classi animazioni
+// Classi animazioni Verticali
 .move-center-top {
     animation: 1s moveCenterTop;
 }
@@ -349,6 +363,22 @@
     animation: 1.1s moveTopCenter;
 }
 
+// Classi animazioni Orizzontali
+.move-center-left {
+    animation: 1s moveCenterLeft;
+}
+
+.move-center-right {
+    animation: 1s moveCenterRight;
+}
+
+.move-right-center {
+    animation: 1.1s moveRightCenter;
+}
+
+.move-left-center {
+    animation: 1.1s moveLeftCenter;
+}
 
 //------------------------------------------------
 // Animation
@@ -425,15 +455,57 @@
 
 @keyframes moveCenterLeft {
     0% {
-        bottom: 200%
+        left: 0%
     }
 
     90% {
-        bottom: 0%
+        left: -100%
     }
 
     100% {
-        bottom: 0%
+        left: -100%
+    }
+}
+
+@keyframes moveCenterRight {
+    0% {
+        left: 0%
+    }
+
+    90% {
+        left: 150%
+    }
+
+    100% {
+        left: 150%
+    }
+}
+
+@keyframes moveLeftCenter {
+    0% {
+        left: 100%
+    }
+
+    90% {
+        left: 0%
+    }
+
+    100% {
+        left: 0%
+    }
+}
+
+@keyframes moveRightCenter {
+    0% {
+        left: -100%
+    }
+
+    90% {
+        left: 0%
+    }
+
+    100% {
+        left: 0%
     }
 }
 
